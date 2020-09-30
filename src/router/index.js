@@ -6,7 +6,7 @@ import Device from '../views/Device/Device.vue'
 import DeviceDetail from '../views/Device/DeviceDetail.vue'
 import My from '../views/My/My'
 import GoodsShelves from '../views/Device/GoodsShelves'
-
+import ChooeseGoods from '../views/Device/ChooeseGoods'
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,6 +19,7 @@ const routes = [
     name: 'Home',
     component: Home
   },
+
   {
     path: '/BuHuo',
     name: 'BuHuo',
@@ -46,6 +47,11 @@ const routes = [
     path: '/Device/GoodsShelves',
     name: 'GoodsShelves',
     component: GoodsShelves
+  },
+  {
+    path: '/Device/GoodsShelves/ChooeseGoods',
+    name: 'ChooeseGoods',
+    component: ChooeseGoods
   },
   {
     path: '/about',

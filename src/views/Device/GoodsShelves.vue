@@ -10,17 +10,12 @@
     /></my-head>
     <div class="info">
       <div class="list" v-for="(grid, index) in list" :key="index">
-        <h5>第{{ grid[0].Column }}层</h5>
+        <h5>第{{ grid[0].Row }}层</h5>
         <van-grid :gutter="8">
           <van-grid-item
             v-for="value in 8"
             :key="value"
-            :to="
-              '/Device/GoodsShelves/ChooeseGoods?deviceCode=' +
-              $route.query.deviceCode +
-              '&column=' +
-              grid[0].Column
-            "
+            :to="to(grid, value)"
             icon="plus"
             :text="text(grid, value)"
           />
@@ -36,11 +31,11 @@ import { GetDeviceGoods } from "../../api/api";
 export default {
   data() {
     return {
-      list: [],
+      list: []
     };
   },
   components: {
-    MyHead,
+    MyHead
   },
   methods: {
     text(grid, index) {
@@ -50,17 +45,26 @@ export default {
         return "空";
       }
     },
+      to(grid, index) {//作用：如果已经有就不能再点击跳转了
+    if (!grid[index - 1]) {
+      return (
+        "/Device/GoodsShelves/ChooeseGoods?deviceCode=" +
+        this.$route.query.deviceCode +
+        "&row=" +
+        grid[0].Row
+      );
+    }
   },
-  mounted() {
+  },
 
-    GetDeviceGoods(this.$route.query.deviceCode).then((res) => {
+  mounted() {
+    GetDeviceGoods(this.$route.query.deviceCode).then(res => {
       if (res.code == 200) {
         this.list = res.data;
       }
     });
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

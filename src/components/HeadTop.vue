@@ -4,6 +4,9 @@
     <template v-slot:left>
       <slot name="left"></slot>
     </template>
+    <template #right>
+      <slot name="right"></slot>
+    </template>
   </van-nav-bar>
 </template>
 
@@ -13,15 +16,15 @@ export default {
     return {};
   },
   props: {
-    title: String,
+    title: String
   },
   methods: {
-    onClickLeft: function () {},
-  },
+    onClickLeft: function() {}
+  }
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .van-nav-bar__title {
   color: #ffffff;
 }

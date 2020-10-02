@@ -4,15 +4,15 @@
     <div class="infoHead">
       <van-grid :column-num="3">
         <van-grid-item>
-          <div class="red">0</div>
+          <div class="red">{{buHuoNum}}</div>
           <div>补货单</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">
-          <div class="red">0</div>
+          <div class="red">{{daiBuHuo}}</div>
           <div>待补货</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">
-          <div class="red">0</div>
+          <div class="red">{{todayBuHuo}}</div>
           <div>今日补货</div>
         </van-grid-item>
       </van-grid>
@@ -21,6 +21,8 @@
         <van-grid-item icon="clock-o" text="补货记录"> </van-grid-item>
       </van-grid>
     </div>
+
+    <div></div>
     <Foot />
   </div>
 </template>
@@ -28,13 +30,29 @@
 <script>
 import MyHead from "../../components/HeadTop";
 import Foot from "../../components/Foot";
+import { GetDeviceBuHuo } from "../../api/api";
 export default {
+  data() {
+    return {
+      list: [],//列表
+      buHuoNum:0,//补货单
+      daiBuHuo:0,//待补货
+      todayBuHuo:0//今日补货
+    };
+  },
   components: {
     MyHead,
-    Foot,
+    Foot
   },
+  mounted() {
+    GetDeviceBuHuo({ mchId: 1 }).then(res => {
+      if (res.code == 200) {
+        this.list = res.data.list;
+        this.buHuoNum = res.data.BuHuoNum
+      }
+    });
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

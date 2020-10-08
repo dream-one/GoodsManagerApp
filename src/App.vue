@@ -4,9 +4,10 @@
 
     <div class="main">
       <!-- <transition :name="transitionName" mode="out-in"> -->
-   
-        <router-view></router-view>
-     
+      <keep-alive>
+        <router-view v-if="$route.meta.alive == true"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.alive == true"></router-view>
       <!-- </transition> -->
     </div>
   </div>

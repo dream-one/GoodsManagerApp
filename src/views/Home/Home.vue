@@ -23,7 +23,7 @@
     </div>
     <div class="nav">
       <van-grid :column-num="3">
-        <van-grid-item icon="enlarge" text="扫码开门" />
+        <van-grid-item to="/Scan"  icon="enlarge" text="扫码开门" />
         <van-grid-item icon="gold-coin" text="订单" />
         <van-grid-item icon="cart" text="商品库" />
         <van-grid-item

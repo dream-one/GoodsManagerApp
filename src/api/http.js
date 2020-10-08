@@ -7,17 +7,24 @@ import store from "../store/index";
 
 //环境切换
 if (process.env.NODE_ENV == "development") {
-  axios.defaults.baseURL = "http://127.0.0.1:15068";
+  axios.defaults.baseURL = "https://fg5d34w.utools.club";
 } else if (process.env.NODE_ENV == "production") {
-  axios.defaults.baseURL = "https://www.production.com";
+  axios.defaults.baseURL = "https://fg5d34w.utools.club";
 }
 // 请求拦截器
 axios.interceptors.request.use(
-  function(config) {
+  function (config) {
     store.commit("showLoading");
+    //请求头添加token
+    let token = window.localStorage.getItem('token')
+    let username = window.localStorage.getItem('user_name')
+    if (token !== null && username != null) {
+      config.headers['token'] = token
+      config.headers['username'] = username
+    }
     return config;
   },
-  function(error) {
+  function (error) {
     store.commit("hideLoading");
     return Promise.reject(error);
   }

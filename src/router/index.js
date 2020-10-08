@@ -7,6 +7,11 @@ import DeviceDetail from '../views/Device/DeviceDetail.vue'
 import My from '../views/My/My'
 import GoodsShelves from '../views/Device/GoodsShelves'
 import ChooeseGoods from '../views/Device/ChooeseGoods'
+import Login from '../views/Login'
+import BuHuoCreate from '../views/BuHuo/BuHuoCreate'
+import DeviceGoodsSet from '../views/BuHuo/DeviceGoodsSet'
+import BuHuoDetail from '../views/BuHuo/BuHuoDetail'
+import Scan from '../views/Scan/Scan'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,27 +19,58 @@ const routes = [
     path: '/',
     redirect: '/Home'
   },
+
   {
     path: '/Home',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+      alive:true//keep-alive
+    }
   },
-
+  {
+    path: '/Login',
+    component: Login,
+    name: 'Login'
+  },
   {
     path: '/BuHuo',
     name: 'BuHuo',
-    component: BuHuo
-  }, {
+    component: BuHuo,
+    meta: {
+      alive: true//keep-alive
+    }
+  },
+  {
+    path: '/Buhuo/BuHuoCreate',
+    name: 'BuHuoCreate',
+    component: BuHuoCreate
+  },
+  {
+    path: '/DeviceGoodsSet',
+    name: 'DeviceGoodsSet',
+    component: DeviceGoodsSet,
+
+  },
+  {
+    path: '/BuHuoDetail',
+    name: 'BuHuoDetail',
+    component: BuHuoDetail,
+  },
+  {
     path: '/Device',
     name: 'Device',
     component: Device,
     meta: {
-      index: 0
+      index: 0,
+      alive: true
     }
   }, {
     path: '/My',
     name: 'My',
-    component: My
+    component: My, meta: {
+      alive: true//keep-alive
+    }
   }, {
     path: '/Device/DeviceDetail',
     name: 'DeviceDetail',
@@ -54,14 +90,9 @@ const routes = [
     component: ChooeseGoods
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
+    path: '/Scan',
+    name: 'Scan',
+    component: Scan
   },
   {
     path: '*',
@@ -69,8 +100,20 @@ const routes = [
   }
 ]
 
+
+
 const router = new VueRouter({
   routes
 })
 
+// 全局路由守卫 判断是否有token 如果没有则强制跳转登录页
+router.beforeEach((to, from, next) => {
+  if (to.path == '/Login') {
+    return next()
+  }
+  const tokenStr = localStorage.getItem('token')
+  if (!tokenStr) return next('/Login')
+
+  return next()
+})
 export default router

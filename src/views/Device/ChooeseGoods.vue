@@ -9,7 +9,7 @@
         color="#fff"
       />
 
-      <div style="color:#fff;" slot="right" @click="confirm">确认</div style="color:#fff;">
+      <div style="color:#fff;" slot="right" @click="confirm">确认</div>
     </my-head>
 
     <div class="list">

@@ -26,6 +26,7 @@
         error-text="请求失败，点击重新加载"
         ><van-cell-group>
           <van-cell
+            title-style="text-align:left"
             :label="'断电 09-90 12:00更新'"
             center
             value=""
@@ -50,6 +51,7 @@
 import MyHead from "../../components/HeadTop";
 import Foot from "../../components/Foot";
 import { GetDevice } from "../../api/api";
+import { Toast } from 'vant';
 export default {
   data() {
     return {
@@ -60,6 +62,7 @@ export default {
     };
   },
   mounted() {
+    
     GetDevice(1).then((res) => {
       console.log(res);
       if (res.code == 0) {

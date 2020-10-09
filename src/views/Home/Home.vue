@@ -6,19 +6,16 @@
       </template>
     </my-head>
     <div class="infoHead">
-      <van-grid :column-num="3">
+      <van-grid :column-num="2">
         <van-grid-item>
-          <div class="red">￥0.00</div>
+          <div class="red">***</div>
           <div>今日成交</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">
-          <div class="red">￥0.00</div>
-          <div>今日成交</div>
+          <div class="red">***</div>
+          <div>今日订单</div>
         </van-grid-item>
-        <van-grid-item icon="photo-o" text="文字">
-          <div class="red">￥0.00</div>
-          <div>今日成交</div>
-        </van-grid-item>
+
       </van-grid>
     </div>
     <div class="nav">

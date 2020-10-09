@@ -37,7 +37,12 @@
             </div>
           </div>
           <div class="itemRight">
-            <van-stepper integer min="0" v-model="value[item.Id]" />
+            <van-stepper
+              :disabled="type == 'confirmSupplement'"
+              integer
+              min="0"
+              v-model="value[item.Id]"
+            />
           </div>
         </div>
       </div>
@@ -47,8 +52,12 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
-import { GetDeviceGoods, EditSupplement } from "../../api/api";
-import { Toast,Dialog } from "vant";
+import {
+  GetDeviceGoods,
+  EditSupplement,
+  ConfirmSupplement,
+} from "../../api/api";
+import { Toast, Dialog } from "vant";
 export default {
   data() {
     return {
@@ -68,6 +77,8 @@ export default {
         return "库存设置";
       } else if (type == "supplement") {
         return "补货数量";
+      } else if (type == "confirmSupplement") {
+        return "确认补货";
       }
     },
   },
@@ -77,7 +88,17 @@ export default {
         title: "提示",
         message: "确认要提交吗？",
       })
-        .then(() => {//确认
+        .then(() => {
+          if (this.type == "confirmSupplement") {
+            ConfirmSupplement({ Id: this.$route.query.id }).then((res) => {
+              if (res.code == 200) {
+                Toast.success(res.data);
+                this.$router.go(-1);
+              }
+            });
+            return;
+          }
+          //确认
           let arr = [];
           this.value.forEach((el, index) => {
             // console.log(el,index) //10 1 值 下标（id）

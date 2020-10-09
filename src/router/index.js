@@ -12,6 +12,7 @@ import BuHuoCreate from '../views/BuHuo/BuHuoCreate'
 import DeviceGoodsSet from '../views/BuHuo/DeviceGoodsSet'
 import BuHuoDetail from '../views/BuHuo/BuHuoDetail'
 import Scan from '../views/Scan/Scan'
+import OpenDoor from '../views/Scan/OpenDoor'
 Vue.use(VueRouter)
 
 const routes = [
@@ -78,6 +79,11 @@ const routes = [
     meta: {
       index: 1
     }
+  },
+  {
+    path:'/Scan/OpenDoor',
+    name:'OpenDoor',
+    component:OpenDoor
   },
   {
     path: '/Device/GoodsShelves',

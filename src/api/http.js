@@ -7,9 +7,9 @@ import store from "../store/index";
 
 //环境切换
 if (process.env.NODE_ENV == "development") {
-  axios.defaults.baseURL = "https://fg5d34w.utools.club";
+  axios.defaults.baseURL = "http://localhost:15068";
 } else if (process.env.NODE_ENV == "production") {
-  axios.defaults.baseURL = "https://fg5d34w.utools.club";
+  axios.defaults.baseURL = "";
 }
 // 请求拦截器
 axios.interceptors.request.use(

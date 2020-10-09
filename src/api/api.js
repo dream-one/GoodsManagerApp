@@ -26,6 +26,10 @@ export const EditSupplement = p => post("/api/Supplement/EditSupplement", p);
 //获取补货详情
 export const GetSupplementDetail = p => get("/api/Supplement/GetSupplementDetail", p);
 
-//获取补货详情
+//删除补货单
 export const DeleteSupplement = p => get("/api/Supplement/DeleteSupplement", p);
 
+//确认补货完成
+export const ConfirmSupplement = p =>get('/api/Supplement/ConfirmSupplement',p)
+
+export const OpenDoor = p =>get('/api/Device/OpenDoor',p)

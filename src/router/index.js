@@ -13,6 +13,8 @@ import DeviceGoodsSet from '../views/BuHuo/DeviceGoodsSet'
 import BuHuoDetail from '../views/BuHuo/BuHuoDetail'
 import Scan from '../views/Scan/Scan'
 import OpenDoor from '../views/Scan/OpenDoor'
+import BuHuoRecord from '../views/BuHuo/BuHuoRecord'
+import OrderList from '../views/Order/OrderList'
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,8 +27,8 @@ const routes = [
     path: '/Home',
     name: 'Home',
     component: Home,
-    meta:{
-      alive:true//keep-alive
+    meta: {
+      alive: true//keep-alive
     }
   },
   {
@@ -43,9 +45,19 @@ const routes = [
     }
   },
   {
+    path: '/OrderList',
+    name: 'OrderList',
+    component: OrderList
+  },
+  {
     path: '/Buhuo/BuHuoCreate',
     name: 'BuHuoCreate',
     component: BuHuoCreate
+  },
+  {
+    path: '/BuHuo/BuHuoRecord',
+    name: 'BuHuoRecord',
+    component: BuHuoRecord
   },
   {
     path: '/DeviceGoodsSet',
@@ -81,9 +93,9 @@ const routes = [
     }
   },
   {
-    path:'/Scan/OpenDoor',
-    name:'OpenDoor',
-    component:OpenDoor
+    path: '/Scan/OpenDoor',
+    name: 'OpenDoor',
+    component: OpenDoor
   },
   {
     path: '/Device/GoodsShelves',

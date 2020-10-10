@@ -5,6 +5,9 @@ export const GetDevice = p => get("/Device/GetDevice?mchId=" + p);
 //登录
 export const Login = p => post("/api/Account/Login", p);
 
+//获取主页数据
+export const GetHomeData = p => get("/api/Account/GetHomeData", p);
+
 //获取设备商品
 export const GetDeviceGoods = p => get("/api/Device/GetDeviceGoods?deviceCode=" + p);
 
@@ -30,6 +33,10 @@ export const GetSupplementDetail = p => get("/api/Supplement/GetSupplementDetail
 export const DeleteSupplement = p => get("/api/Supplement/DeleteSupplement", p);
 
 //确认补货完成
-export const ConfirmSupplement = p =>get('/api/Supplement/ConfirmSupplement',p)
+export const ConfirmSupplement = p => get('/api/Supplement/ConfirmSupplement', p)
 
-export const OpenDoor = p =>get('/api/Device/OpenDoor',p)
+//扫码开门
+export const OpenDoor = p => get('/api/Device/OpenDoor', p)
+
+//根据商户id获取补货单列表
+export const GetSupplement = p => get('/api/Supplement/GetSupplementOrder', p)

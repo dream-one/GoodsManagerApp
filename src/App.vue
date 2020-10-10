@@ -37,6 +37,9 @@ export default {
   computed: {
     ...mapState(["LOADING"]),
   },
+  mounted() {
+    this.$store.commit("setUrl");
+  },
   watch: {
     $route(to, from) {
       this.transitionName = "";

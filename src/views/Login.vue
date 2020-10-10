@@ -45,24 +45,28 @@ export default {
         forbidClick: true,
       });
 
-      Login(values).then((res) => {
-        if (res.code == 200) {
-          //写入本地存储用户信息
-          var storage = window.localStorage;
-          storage["user_id"] = res.data.id;
-          storage["user_name"] = res.data.name;
-          storage["token"] = res.data.token;
-          Toast.success("登录成功");
+      Login(values)
+        .then((res) => {
+          if (res.code == 200) {
+            //写入本地存储用户信息
 
-          //跳转到主页
-          this.$router.push("/Home");
-        } else {
-          Toast.fail(res.msg);
-        }
-      }).catch(err=>{
-        Toast.fail('出现错误')
-        console.log(err)
-      });
+            var storage = window.localStorage;
+            storage["user_id"] = res.data.id;
+            this.$store.commit("setUserId"); //设置用户Id
+            storage["user_name"] = res.data.name;
+            storage["token"] = res.data.token;
+            Toast.success("登录成功");
+
+            //跳转到主页
+            this.$router.push("/Home");
+          } else {
+            Toast.fail(res.msg);
+          }
+        })
+        .catch((err) => {
+          Toast.fail("出现错误");
+          console.log(err);
+        });
     },
   },
 };
@@ -81,5 +85,4 @@ export default {
 .v-leave-active {
   transition: all 0.5s ease-out;
 }
-
 </style>

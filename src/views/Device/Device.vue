@@ -105,7 +105,6 @@ export default {
 }
 .red + div {
   font-size: 13px;
-  color: saddlebrown;
 }
 .DeviceList {
   margin-top: 20px;

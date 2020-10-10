@@ -19,8 +19,13 @@
       />
     </div>
 
-    <div class="list">
-      <van-list v-model="loading" :finished="finished" @load="onLoad">
+    <div class="list" style="height: 85vh">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        @load="onLoad"
+        offset="50"
+      >
         <van-checkbox-group v-model="result">
           <van-cell-group>
             <van-cell
@@ -38,7 +43,7 @@
                   style="margin: 0 5px 0 0"
                   height="50px"
                   width="50px"
-                  :src="url + item.Goods.ImageUrl"
+                  :src="BaseUrl + item.Goods.ImageUrl"
                   alt="图片"
                 />
               </template>
@@ -57,24 +62,22 @@
 import MyHead from "../../components/HeadTop";
 import { GetGoods, SetDeviceGoods } from "../../api/api";
 import { Toast } from "vant";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       index: 1,
-      limit: 6,
+      limit: 15,
       list: [],
       result: [], //选中的结果数组
-      url: "",
       loading: false,
       finished: false,
       searchValue: "",
     };
   },
-  mounted() {
-    var http = window.location.protocol; //http:
-    var host = window.location.host; //49.665:44 主机名加端口
-    this.url = http + "//" + "localhost:15068";
+  computed: {
+    ...mapState(["BaseUrl"]),
   },
   components: {
     MyHead,
@@ -94,27 +97,20 @@ export default {
     },
     onLoad() {
       // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求is
-      this.index++;
-
+      this.loading = true;
       let obj = { page: this.index, limit: this.limit };
       GetGoods(obj).then((res) => {
+        this.loading = false;
         if (res.code == 0) {
-          // this.list.push(res.data);
-          if (res.data.length == 0) {
+          if (res.data.length == 0 || this.list.length >= res.count) {
             this.loading = false;
             this.finished = true;
+            return;
           }
           this.list.push.apply(this.list, res.data); //将数组连起来
-
-          // 数据全部加载完成
-          if (this.list.length >= res.count) {
-            this.finished = true;
-          }
         }
-        // 加载状态结
-        this.loading = false;
       });
+      this.index++;
     },
     confirm() {
       let goodsIdList = [];

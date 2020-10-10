@@ -17,8 +17,9 @@
         </van-grid-item>
       </van-grid>
       <van-grid :column-num="2">
-        <van-grid-item icon="orders-o" text="补货单"> </van-grid-item>
-        <van-grid-item icon="clock-o" text="补货记录"> </van-grid-item>
+        <van-grid-item icon="clock-o" text="补货记录" to="/BuHuo/BuHuoRecord">
+        </van-grid-item>
+        <van-grid-item icon="question-o" text="使用教程"> </van-grid-item>
       </van-grid>
     </div>
 
@@ -33,7 +34,7 @@
           value=""
           is-link
           center
-          :to="'/Buhuo/BuHuoCreate?deviceCode='+item.DeviceCode"
+          :to="'/Buhuo/BuHuoCreate?deviceCode=' + item.DeviceCode"
         />
       </van-cell-group>
     </div>
@@ -63,6 +64,8 @@ export default {
       if (res.code == 200) {
         this.list = res.data.list;
         this.buHuoNum = res.data.BuHuoNum;
+        this.daiBuHuo = res.data.daiBuHuo;
+        this.todayBuHuo = res.data.todayBuHuo;
       }
     });
   },

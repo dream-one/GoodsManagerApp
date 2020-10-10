@@ -26,7 +26,7 @@
             <van-image
               width="50"
               height="50"
-              src="https://img.yzcdn.cn/vant/cat.jpeg"
+              :src="BaseUrl+item.ImageUrl"
             />
           </div>
           <div class="itemCenter">
@@ -58,6 +58,7 @@ import {
   ConfirmSupplement,
 } from "../../api/api";
 import { Toast, Dialog } from "vant";
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -81,6 +82,7 @@ export default {
         return "确认补货";
       }
     },
+    ...mapState(['BaseUrl'])
   },
   methods: {
     confirm() {

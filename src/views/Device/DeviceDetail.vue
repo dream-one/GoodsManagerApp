@@ -10,18 +10,14 @@
       />
     </my-head>
     <div class="infoHead">
-      <van-grid :column-num="3">
+      <van-grid :column-num="2">
         <van-grid-item>
-          <div class="red">0.00元</div>
-          <div>今日成交</div>
+          <div class="red">{{deviceData.totalIncome}} 元</div>
+          <div>成交量</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">
-          <div class="red">0单</div>
-          <div>订单数量</div>
-        </van-grid-item>
-        <van-grid-item icon="photo-o" text="文字">
-          <div class="red">0.00元</div>
-          <div>客单价</div>
+          <div class="red">{{deviceData.totalOrder}} 单</div>
+          <div>订单量</div>
         </van-grid-item>
       </van-grid>
     </div>
@@ -49,7 +45,23 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
+import { GetDeviceData } from "../../api/api";
 export default {
+  data() {
+    return {
+      deviceData: {
+        totalIncome: 0,
+        totalOrder: 0,
+      },
+    };
+  },
+  mounted() {
+    GetDeviceData({ deviceCode: this.$route.query.deviceCode }).then((res) => {
+      if(res.code==200){
+        this.deviceData = res.data
+      }
+    });
+  },
   components: {
     MyHead,
   },

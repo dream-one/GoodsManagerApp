@@ -19,7 +19,8 @@
       <van-grid :column-num="2">
         <van-grid-item icon="clock-o" text="补货记录" to="/BuHuo/BuHuoRecord">
         </van-grid-item>
-        <van-grid-item icon="question-o" text="使用教程"> </van-grid-item>
+        <van-grid-item icon="question-o" to="/Course" text="使用教程">
+        </van-grid-item>
       </van-grid>
     </div>
 

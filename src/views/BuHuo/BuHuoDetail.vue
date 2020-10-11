@@ -46,7 +46,7 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
-import { GetSupplementDetail, DeleteSupplement } from "../../api/api";
+import { GetSupplementDetail, DeleteSupplement} from "../../api/api";
 import { Toast,Dialog } from 'vant';
 export default {
   data() {

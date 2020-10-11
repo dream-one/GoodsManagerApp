@@ -14,7 +14,7 @@
       </van-tabbar-item>
 
       <van-tabbar-item to="/Device">
-        <span>货柜</span>
+        <span>设备</span>
         <template slot="icon">
           <van-icon
             size="20"

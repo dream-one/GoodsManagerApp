@@ -40,3 +40,6 @@ export const OpenDoor = p => get('/api/Device/OpenDoor', p)
 
 //根据商户id获取补货单列表
 export const GetSupplement = p => get('/api/Supplement/GetSupplementOrder', p)
+
+//根据设备码获取此设备的收入和订单量
+export const GetDeviceData = p => get('/api/Device/GetDeviceData', p)

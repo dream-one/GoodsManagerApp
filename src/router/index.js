@@ -15,6 +15,7 @@ import Scan from '../views/Scan/Scan'
 import OpenDoor from '../views/Scan/OpenDoor'
 import BuHuoRecord from '../views/BuHuo/BuHuoRecord'
 import OrderList from '../views/Order/OrderList'
+import Course from '../views/BuHuo/Course'
 Vue.use(VueRouter)
 
 const routes = [
@@ -64,6 +65,11 @@ const routes = [
     name: 'DeviceGoodsSet',
     component: DeviceGoodsSet,
 
+  },
+  {
+    path: '/Course',
+    name: 'Course',
+    component: Course
   },
   {
     path: '/BuHuoDetail',

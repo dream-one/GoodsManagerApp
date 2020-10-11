@@ -29,13 +29,9 @@
     <div class="nav">
       <van-grid :column-num="3">
         <van-grid-item to="/Scan" icon="enlarge" text="扫码开门" />
-        <van-grid-item to="/OrderList" icon="gold-coin" text="订单" />
-        <van-grid-item icon="cart" text="商品库" />
-        <van-grid-item
-          icon="more-o"
-          size="20"
-          text="其他"
-        />
+        <van-grid-item @click="tishi" icon="gold-coin" text="订单" />
+        <van-grid-item icon="cart" @click="tishi" text="商品库" />
+        <van-grid-item icon="more-o" @click="tishi" size="20" text="其他" />
       </van-grid>
     </div>
     <Foot />
@@ -46,6 +42,7 @@
 import MyHead from "../../components/HeadTop";
 import Foot from "../../components/Foot";
 import { GetHomeData } from "../../api/api";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -61,7 +58,11 @@ export default {
     MyHead,
     Foot,
   },
-  methods: {},
+  methods: {
+    tishi() {
+      Toast.fail("暂未开放");
+    },
+  },
   mounted() {
     var mch_id = window.localStorage.getItem("user_id");
     GetHomeData({ mch_id }).then((res) => {

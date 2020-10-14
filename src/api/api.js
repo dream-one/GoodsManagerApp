@@ -43,3 +43,11 @@ export const GetSupplement = p => get('/api/Supplement/GetSupplementOrder', p)
 
 //根据设备码获取此设备的收入和订单量
 export const GetDeviceData = p => get('/api/Device/GetDeviceData', p)
+
+//删除货道商品
+export const DeleteDeviceGoods = p => get('/api/Goods/DeleteDeviceGoods', p)
+
+
+//获取设备层数
+export const GetDeviceFloorNum = p => get('/api/Device/GetDeviceFloorNum', p)
+

@@ -1,6 +1,6 @@
 <template>
   <!-- 头部导航栏 -->
-  <van-nav-bar :title="title" placeholder>
+  <van-nav-bar :title="title" placeholder fixed>
     <template v-slot:left>
       <slot name="left"></slot>
     </template>
@@ -16,11 +16,11 @@ export default {
     return {};
   },
   props: {
-    title: String
+    title: String,
   },
   methods: {
-    onClickLeft: function() {}
-  }
+    onClickLeft: function () {},
+  },
 };
 </script>
 
@@ -28,8 +28,8 @@ export default {
 .van-nav-bar__title {
   color: #ffffff;
 }
-.van-nav-bar {
-  background-color: #2793ff;
+::v-deep .van-nav-bar {
+  background-color: #2793ff ;
 }
 .van-nav-bar__title .van-ellipsis {
   position: relative;

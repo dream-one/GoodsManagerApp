@@ -103,7 +103,7 @@ export default {
           //确认
           let arr = [];
           this.value.forEach((el, index) => {
-            // console.log(el,index) //10 1 值 下标（id）
+          //10 1 值 下标（id）
             let obj = { Id: index, Value: el, Type: this.type };
             arr.push(obj);
           });

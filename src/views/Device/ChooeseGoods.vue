@@ -125,6 +125,8 @@ export default {
         if (res.code == 200) {
           Toast.success("添加成功");
           this.$router.go(-1);
+        }else{
+          Toast.fail(res.msg)
         }
       });
     },

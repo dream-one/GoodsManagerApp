@@ -16,6 +16,8 @@ import OpenDoor from '../views/Scan/OpenDoor'
 import BuHuoRecord from '../views/BuHuo/BuHuoRecord'
 import OrderList from '../views/Order/OrderList'
 import Course from '../views/BuHuo/Course'
+import AddGoods from '../views/MerchantGoods/AddGoods'
+import EditGoods from '../views/MerchantGoods/EditGoods'
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +33,15 @@ const routes = [
     meta: {
       alive: true//keep-alive
     }
+  },
+  {
+    path: '/AddGoods',
+    name: 'AddGoods',
+    component: AddGoods
+  }, {
+    path: '/EditGoods',
+    name: 'EditGoods',
+    component: EditGoods
   },
   {
     path: '/Login',

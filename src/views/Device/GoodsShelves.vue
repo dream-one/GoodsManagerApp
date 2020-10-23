@@ -8,6 +8,7 @@
         slot="left"
         color="#fff"
     /></my-head>
+    <van-notice-bar left-icon="info-o" > 每一层商品需要与实际售卖保持一致。 </van-notice-bar>
     <div class="info">
       <!-- floor--层数 从1开始，减1即dataList的下标-->
       <!-- dataList 每一层的数据数组，下标+1即层数 -->

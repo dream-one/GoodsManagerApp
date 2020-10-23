@@ -39,6 +39,7 @@ export default {
   },
   mounted() {
     this.$store.commit("setUrl");
+    this.$store.commit("setUserId");
   },
   watch: {
     $route(to, from) {

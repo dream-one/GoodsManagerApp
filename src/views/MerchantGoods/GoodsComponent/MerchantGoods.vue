@@ -1,27 +1,5 @@
 <template>
   <div>
-    <my-head title="选择商品">
-      <van-icon
-        @click="$router.go(-1)"
-        name="arrow-left"
-        size="25"
-        slot="left"
-        color="#fff"
-      />
-
-      <div style="color: #fff" slot="right" @click="confirm">确认</div>
-    </my-head>
-    <van-notice-bar left-icon="volume-o" mode="link" @click="go">
-      如果未找到对应的商品，可以去云库中添加
-    </van-notice-bar>
-    <div class="search">
-      <van-search
-        v-model="searchValue"
-        placeholder="请输入商品名"
-        @search="onSearch"
-      />
-    </div>
-
     <div class="list" style="height: 79vh">
       <van-list
         v-model="loading"
@@ -29,14 +7,11 @@
         @load="onLoad"
         offset="50"
       >
-        <van-checkbox-group v-model="result">
-          <van-cell-group>
+        <template v-for="(item, index) in dataList">
+          <van-swipe-cell ref="swipe" :key="index" :before-close="beforeClose">
             <van-cell
-              v-for="(item, index) in dataList"
               clickable
-              :key="item.Id"
               :title="item.Name"
-              @click="toggle(index)"
               value=""
               :label="'售价:' + item.SellPrice + '元'"
               title-style="text-align:left"
@@ -50,12 +25,26 @@
                   alt="图片"
                 />
               </template>
-              <template #right-icon>
-                <van-checkbox :name="item" ref="checkboxes" />
-              </template>
             </van-cell>
-          </van-cell-group>
-        </van-checkbox-group>
+            <template #right>
+              <van-button
+                style="height: 100%"
+                square
+                type="info"
+                text="编辑"
+                @click="Edit(item.Id)"
+              />
+              <van-button
+                style="height: 100%"
+                square
+                type="danger"
+                text="删除"
+                name="del"
+                @click="Del(item.Id, index)"
+              />
+            </template>
+          </van-swipe-cell>
+        </template>
       </van-list>
       <van-empty
         v-if="list.length == 0 && searchList.length == 0"
@@ -67,26 +56,24 @@
 </template>
 
 <script>
-import MyHead from "../../components/HeadTop";
-import { GetMerchantGoods, SetDeviceGoods } from "../../api/api";
-import { Toast } from "vant";
+import { GetMerchantGoods, DeleteMerchantGoods } from "../../../api/api";
 import { mapState } from "vuex";
-
+import { Dialog, Toast } from "vant";
 export default {
+  props: ["searchValue"],
+
   data() {
     return {
       index: 1,
-      limit: 10,
-      list: [], //存放普通商品的数组
-      searchList: [], //存放搜索列表的数组
-      result: [], //选中的结果数组
+      limit: 15,
+      list: [],
+      searchList: [],
       loading: false,
       finished: false,
-      searchValue: "",
     };
   },
   computed: {
-    ...mapState(["BaseUrl", "UserId"]),
+    ...mapState(["UserId", "BaseUrl"]),
     dataList() {
       if (this.searchValue) {
         //如果搜索框里有值
@@ -106,18 +93,8 @@ export default {
       }
     },
   },
-  components: {
-    MyHead,
-  },
+  mounted() {},
   methods: {
-    go() {
-      //前往商品列表页
-      this.$router.push("/AddGoods");
-    },
-    toggle(index) {
-      //切换可见状态
-      this.$refs.checkboxes[index].toggle();
-    },
     onSearch(val) {
       this.list = [];
       this.index = 1;
@@ -149,7 +126,6 @@ export default {
       GetMerchantGoods(obj).then((res) => {
         this.loading = false;
         if (res.code == 0) {
-          //如果取不到数据说明已经全部加载完成
           if (res.data.length == 0) {
             this.loading = false;
             this.finished = true;
@@ -164,30 +140,39 @@ export default {
       });
       this.index++;
     },
-    confirm() {
-      if (this.result.length == 0) {
-        return Toast.fail("请选择要上架的商品");
-      }
-      let goodsIdList = [];
-      this.result.forEach((el) => {
-        goodsIdList.push(el.Goods.Id);
-      });
-      SetDeviceGoods({
-        goodsIdList: goodsIdList,
-        row: this.$route.query.row,
-        deviceCode: this.$route.query.deviceCode,
-      }).then((res) => {
-        if (res.code == 200) {
-          Toast.success("添加成功");
-          this.$router.go(-1);
-        } else {
-          Toast.fail(res.msg);
-        }
-      });
+    Edit(id) {
+      this.$router.push({ path: "EditGoods", query: { id } });
+    },
+    beforeClose({ name, position, instance }) {},
+    //
+    Del(id, index) {
+      Dialog.confirm({
+        message: "确定删除吗？",
+      })
+        .then(() => {
+          DeleteMerchantGoods({ id }).then((res) => {
+            if (res.code == 200) {
+              if (res.data == true) {
+                Toast.success("删除成功");
+                //查找删除的数据下标
+                var delIndex = this.list.findIndex((element) => {
+                  return element.Id == id;
+                });
+                //通过下标删除
+                this.list.splice(delIndex, 1);
+              }
+            } else {
+              Toast.fail(res.msg);
+            }
+          });
+        })
+        .catch(() => {
+          this.$refs.swipe[index].close();
+        });
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 </style>

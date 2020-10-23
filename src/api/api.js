@@ -51,3 +51,14 @@ export const DeleteDeviceGoods = p => get('/api/Goods/DeleteDeviceGoods', p)
 //获取设备层数
 export const GetDeviceFloorNum = p => get('/api/Device/GetDeviceFloorNum', p)
 
+//获取商户商品库
+export const GetMerchantGoods = p => get('/api/Goods/GetMerchantGoods', p)
+
+//通过id获取商品
+export const GetGoodsById = p => get('/api/Goods/GetGoodsById', p)
+
+//添加商户商品库
+export const AddMerchantGoods = p => post('/api/Goods/AddMerchantGoods', p)
+
+//删除商户商品
+export const DeleteMerchantGoods = p => get('/api/Goods/DeleteMerchantGoods', p)

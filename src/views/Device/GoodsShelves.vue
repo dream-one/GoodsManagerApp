@@ -115,7 +115,7 @@ export default {
         message: "确认要删除吗？",
       })
         .then(() => {
-          DeleteDeviceGoods({ Id: floorData[index - 1].Id }).then((res) => {
+          DeleteDeviceGoods({ Id: floorData[index - 1].Id,goodsId: floorData[index - 1].goodsId  }).then((res) => {
             if (res.code == 200) {
               this.getList();
               Toast.success("删除成功");

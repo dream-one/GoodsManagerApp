@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-head :title="title">
+    <my-head title="订单列表">
       <van-icon
         @click="$router.go(-1)"
         name="arrow-left"
@@ -9,31 +9,50 @@
         color="#fff"
       />
     </my-head>
-    
-    <van-tabs animated sticky v-model="active">
-        
-      <van-tab title="全部订单">
-        <all-order />
-     
-      </van-tab>
-      <van-tab title="未支付"> <no-pay-order /></van-tab>
-    </van-tabs>
-  
+
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <van-cell
+        title-style="text-align:left"
+        v-for="item in list"
+        is-link
+        :to="'/Order/OrderDetail?orderNo=' + item.OrderNo"
+        border
+        :value="'￥' + item.Amount"
+        :key="item.Id"
+        center
+        :label="item.CreateTime"
+      >
+        <template #title>
+          <span class="custom-title">{{ item.OrderNo }}</span>
+          <van-tag v-if="item.IsPay == true" type="success">已支付</van-tag>
+          <van-tag v-else type="danger">未支付</van-tag>
+        </template>
+      </van-cell>
+    </van-list>
   </div>
 </template>
 
 <script>
 import MyHead from "../../components/HeadTop";
-import AllOrder from "./AllOrder";
-import NoPayOrder from "./NoPayOrder";
+import { mapState } from "vuex";
+import { GetAllOrder } from "../../api/api";
 export default {
   data() {
     return {
-      active: 2,
-      searchValue: "",
+      list: [],
+      loading: false,
+      finished: false,
+      page: 0,
+      limit: 10,
     };
   },
   computed: {
+    ...mapState(["UserId"]),
     title() {
       var deviceCode = this.$route.query.deviceCode;
       if (deviceCode) {
@@ -43,15 +62,35 @@ export default {
       }
     },
   },
-  methods:{
-  onSearch(val) {
+
+  methods: {
+    getOrderList() {},
+    onSearch(val) {
       console.log(val);
+    },
+    onLoad() {
+      this.loading = true;
+      let obj = {
+        page: this.page,
+        limit: this.limit,
+        mch_id: this.UserId,
+      };
+      GetAllOrder(obj).then((res) => {
+        this.loading = false;
+        if (res.code == 200) {
+          if (res.data.length == 0) {
+            this.loading = false;
+            this.finished = true;
+            return;
+          }
+          this.list.push.apply(this.list, res.data); //将数组连起来
+        }
+        this.page++;
+      });
     },
   },
   components: {
     MyHead,
-    AllOrder,
-    NoPayOrder,
   },
 };
 </script>
@@ -59,5 +98,12 @@ export default {
 <style scoped>
 .van-tabs__line {
   background-color: #2793ff !important;
+}
+.custom-title {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.van-cell__value {
+  flex: 0.2;
 }
 </style>

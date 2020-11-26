@@ -170,7 +170,8 @@ export default {
       }
       let goodsIdList = [];
       this.result.forEach((el) => {
-        goodsIdList.push(el.Goods.Id);
+        console.log(el)
+        goodsIdList.push(el.Goods_Id);
       });
       SetDeviceGoods({
         goodsIdList: goodsIdList,

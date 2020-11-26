@@ -1,6 +1,7 @@
 //统一管理接口
 import { get, post } from "./http.js"; //引入get与post
-export const GetDevice = p => get("/Device/GetDevice?mchId=" + p);
+
+export const GetDevice = p => get("/api/Device/GetDevice?mchId=" + p);
 
 //登录
 export const Login = p => post("/api/Account/Login", p);
@@ -54,6 +55,9 @@ export const GetDeviceFloorNum = p => get('/api/Device/GetDeviceFloorNum', p)
 //获取商户商品库
 export const GetMerchantGoods = p => get('/api/Goods/GetMerchantGoods', p)
 
+//通过id获取商户商品
+export const GetMerchantGoodsById = p => get('/api/Goods/GetMerchantGoodsById', p)
+
 //通过id获取商品
 export const GetGoodsById = p => get('/api/Goods/GetGoodsById', p)
 
@@ -62,3 +66,13 @@ export const AddMerchantGoods = p => post('/api/Goods/AddMerchantGoods', p)
 
 //删除商户商品
 export const DeleteMerchantGoods = p => get('/api/Goods/DeleteMerchantGoods', p)
+
+//获取补货单商品列表
+export const GetSupplementGoodsList = p => get('/api/Supplement/GetSupplementGoodsList', p)
+
+
+//获取所有订单
+export const GetAllOrder = p =>get('/api/Order/GetAllOrder',p)
+
+//获取订单
+export const GetOrderByNo = p =>get('/api/Order/GetOrderByNo',p)

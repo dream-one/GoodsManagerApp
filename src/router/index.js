@@ -18,6 +18,7 @@ import OrderList from '../views/Order/OrderList'
 import Course from '../views/BuHuo/Course'
 import AddGoods from '../views/MerchantGoods/AddGoods'
 import EditGoods from '../views/MerchantGoods/EditGoods'
+import OrderDetail from '../views/Order/OrderDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -44,6 +45,14 @@ const routes = [
     component: EditGoods
   },
   {
+    path: '/Order/OrderDetail',
+    component: OrderDetail,
+    name: 'OrderDetail',
+    meta: {
+      alive: true//keep-alive
+    }
+  },
+  {
     path: '/Login',
     component: Login,
     name: 'Login'
@@ -59,7 +68,10 @@ const routes = [
   {
     path: '/OrderList',
     name: 'OrderList',
-    component: OrderList
+    component: OrderList,
+    meta: {
+      alive: true//keep-alive
+    }
   },
   {
     path: '/Buhuo/BuHuoCreate',

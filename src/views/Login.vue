@@ -49,7 +49,6 @@ export default {
         .then((res) => {
           if (res.code == 200) {
             //写入本地存储用户信息
-
             var storage = window.localStorage;
             storage["user_id"] = res.data.id;
             this.$store.commit("setUserId"); //设置用户Id

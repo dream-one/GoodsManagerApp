@@ -23,17 +23,16 @@
           :key="itemIndex"
         >
           <div class="itemLeft">
-            <van-image
-              width="50"
-              height="50"
-              :src="BaseUrl+item.ImageUrl"
-            />
+            <van-image width="50" height="50" :src="BaseUrl + item.ImageUrl" />
           </div>
           <div class="itemCenter">
             <div class="goodsName">{{ item.Name }}</div>
             <div class="goodsLabel">
-              <span v-if="type !== 'stock'">容量 {{ item.Capacity }}</span>
-              <span v-if="type !== 'capacity'">库存 {{ item.Stock }}</span>
+              <span v-if="type == 'capacity'">容量 {{ item.Capacity }}</span>
+              <span v-if="type == 'stock'">库存 {{ item.Stock }}</span>
+              <span v-if="type == 'confirmSupplement' || type == 'supplement'"
+                >补货数量</span
+              >
             </div>
           </div>
           <div class="itemRight">
@@ -56,9 +55,10 @@ import {
   GetDeviceGoods,
   EditSupplement,
   ConfirmSupplement,
+  GetSupplementGoodsList,
 } from "../../api/api";
 import { Toast, Dialog } from "vant";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -82,7 +82,7 @@ export default {
         return "确认补货";
       }
     },
-    ...mapState(['BaseUrl'])
+    ...mapState(["BaseUrl"]),
   },
   methods: {
     confirm() {
@@ -103,7 +103,7 @@ export default {
           //确认
           let arr = [];
           this.value.forEach((el, index) => {
-          //10 1 值 下标（id）
+            //10 1 值 下标（id）
             let obj = { Id: index, Value: el, Type: this.type };
             arr.push(obj);
           });
@@ -125,6 +125,20 @@ export default {
   mounted() {
     //获取设备码
     let deviceCode = this.$route.query.deviceCode;
+    if (this.type == "confirmSupplement") {
+      //如果是确认补货，单独获取数据。获取补货单下的商品
+      GetSupplementGoodsList({ supplementId: this.$route.query.id }).then(
+        (res) => {
+          this.list = res.data;
+          this.list.forEach((element, index, arr) => {
+            element.forEach((el) => {
+              this.value[el.Id] = el.ReplenishmentNum;
+            });
+          });
+        }
+      );
+      return;
+    }
     GetDeviceGoods(deviceCode).then((res) => {
       if (res.code == 200) {
         this.list = res.data;
@@ -135,7 +149,7 @@ export default {
               this.value[el.Id] = el.Capacity;
             } else if (this.type == "stock") {
               this.value[el.Id] = el.Stock;
-            } else {
+            } else if (this.type == "supplement") {
               this.value[el.Id] = el.Capacity - el.Stock;
             }
           });

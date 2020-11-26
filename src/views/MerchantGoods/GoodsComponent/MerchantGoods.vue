@@ -32,7 +32,7 @@
                 square
                 type="info"
                 text="编辑"
-                @click="Edit(item.Id)"
+                @click="Edit(item.Goods_Id, item.Id)"
               />
               <van-button
                 style="height: 100%"
@@ -140,31 +140,38 @@ export default {
       });
       this.index++;
     },
-    Edit(id) {
-      this.$router.push({ path: "EditGoods", query: { id } });
+    Edit(goodsId, mgId) {
+      this.$router.push({
+        path: "EditGoods",
+        query: { id: goodsId, mgId, flag: "edit" },
+      });
     },
     beforeClose({ name, position, instance }) {},
     //
     Del(id, index) {
       Dialog.confirm({
-        message: "确定删除吗？",
+        message: "请谨慎操作，所有设备将删除该商品",
       })
         .then(() => {
-          DeleteMerchantGoods({ id }).then((res) => {
-            if (res.code == 200) {
-              if (res.data == true) {
-                Toast.success("删除成功");
-                //查找删除的数据下标
-                var delIndex = this.list.findIndex((element) => {
-                  return element.Id == id;
-                });
-                //通过下标删除
-                this.list.splice(delIndex, 1);
+          DeleteMerchantGoods({ id, mch_id: this.$store.state.UserId }).then(
+            (res) => {
+              if (res.code == 200) {
+                if (res.data == true) {
+                  Toast.success("删除成功");
+                  //查找删除的数据下标
+                  var delIndex = this.list.findIndex((element) => {
+                    return element.Id == id;
+                  });
+                  //关闭打开的滑动
+                  this.$refs.swipe[index].close();
+                  //通过下标删除
+                  this.list.splice(delIndex, 1);
+                }
+              } else {
+                Toast.fail(res.msg);
               }
-            } else {
-              Toast.fail(res.msg);
             }
-          });
+          );
         })
         .catch(() => {
           this.$refs.swipe[index].close();

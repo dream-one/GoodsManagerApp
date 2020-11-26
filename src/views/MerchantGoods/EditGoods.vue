@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-head title="编辑商品">
+    <my-head :title="title">
       <van-icon
         @click="$router.go(-1)"
         name="arrow-left"
@@ -14,7 +14,7 @@
       width="150"
       height="150"
       lazy-load
-      :src="goods.ImageUrl"
+      :src="BaseUrl + goods.ImageUrl"
       alt="商品图片"
     />
 
@@ -24,7 +24,7 @@
         ref="Name"
         name="Name"
         label="商品名称"
-        :rules="[{ required: true, message: '请填写商品名称' }]"
+        readonly
       />
       <van-field
         v-model="SellPrice"
@@ -51,7 +51,13 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
-import { GetGoodsById, AddMerchantGoods } from "../../api/api";
+import {
+  GetGoodsById,
+  AddMerchantGoods,
+  GetMerchantGoodsById,
+} from "../../api/api";
+import { mapState } from "vuex";
+
 import { Toast } from "vant";
 export default {
   data() {
@@ -60,33 +66,50 @@ export default {
       Name: "",
       SellPrice: "", //售价
       CostPrice: "", //成本价
+      title: "",
     };
+  },
+  computed: {
+    ...mapState(["UserId", "BaseUrl"]),
   },
   methods: {
     onSubmit(values) {
-      console.log("submit", values);
       values.Goods_Id = this.$route.query.id;
       values.Merchant_Id = this.$store.state.UserId;
       AddMerchantGoods(values).then((res) => {
         if (res.code == 200) {
           Toast.success("添加成功");
           this.$router.go(-1);
-        }else{
-            Toast.fail(res.msg)
+        } else {
+          Toast.fail(res.msg);
         }
       });
     },
   },
   mounted() {
     this.$refs.Name.focus();
-
-    GetGoodsById({ id: this.$route.query.id }).then((res) => {
-      if (res.code == 200) {
-        this.goods = res.data;
-        this.Name = this.goods.Name;
-        this.SellPrice = this.goods.Price;
-      }
-    });
+    var flag = this.$route.query.flag;
+    if (flag == "edit") {
+      //如果是点击编辑进入的
+      this.title = "编辑商品";
+      GetMerchantGoodsById({ id: this.$route.query.mgId }).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          this.goods = res.data;
+          this.Name = this.goods.Name;
+          this.SellPrice = this.goods.SellPrice;
+        }
+      });
+    } else {
+      this.title = "添加商品";
+      GetGoodsById({ id: this.$route.query.id }).then((res) => {
+        if (res.code == 200) {
+          this.goods = res.data;
+          this.Name = this.goods.Name;
+          this.SellPrice = this.goods.Price;
+        }
+      });
+    }
   },
   components: {
     MyHead,

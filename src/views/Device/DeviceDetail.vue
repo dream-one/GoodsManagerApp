@@ -29,7 +29,7 @@
     </div> -->
     <div class="infoMain">
       <van-grid :column-num="3">
-        <van-grid-item icon="info" text="设备信息"> </van-grid-item>
+        <van-grid-item icon="info" text="设备信息" @click="tishi"> </van-grid-item>
         <van-grid-item
           :to="
             '/Device/GoodsShelves?deviceCode=' + this.$route.query.deviceCode
@@ -37,7 +37,7 @@
           icon="cart"
           text="商品上架"
         ></van-grid-item>
-        <van-grid-item icon="balance-list" text="订单明细"> </van-grid-item>
+        <van-grid-item icon="balance-list" text="订单明细"  @click="tishi"> </van-grid-item>
       </van-grid>
     </div>
   </div>
@@ -46,6 +46,8 @@
 <script>
 import MyHead from "../../components/HeadTop";
 import { GetDeviceData } from "../../api/api";
+import { Toast } from "vant";
+
 export default {
   data() {
     return {
@@ -57,10 +59,15 @@ export default {
   },
   mounted() {
     GetDeviceData({ deviceCode: this.$route.query.deviceCode }).then((res) => {
-      if(res.code==200){
-        this.deviceData = res.data
+      if (res.code == 200) {
+        this.deviceData = res.data;
       }
     });
+  },
+  methods:{
+    tishi(){
+      Toast.fail('暂未开放')
+    }
   },
   components: {
     MyHead,

@@ -51,7 +51,7 @@ export default {
       GetDeviceBuHuoByCode({ deviceCode: this.deviceCode }).then((res) => {
         if (res.code == 200) {
           if (res.data.length == 0) {
-            Toast.fail("此设备还没有未完成的补货单");
+            Toast.fail("此设备没有未完成的补货单");
           } else {
             //跳转
             this.$router.push({

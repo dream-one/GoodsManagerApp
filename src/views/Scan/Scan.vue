@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast } from "vant";
 /**
  * h5+ 扫码功能实现
  */
@@ -61,28 +61,19 @@ export default {
         // 获得code
         result = result.replace(/\n/g, "");
         if (result) {
-          // alert(result)
           // alert(that.fromRouter)
           // 成功，关闭控件，带参数跳转到正常页面去
-          if (result.indexOf("merchantNo=") > -1) {
-            //如果扫码结果中包含有商户ID，就截取ID拼接到商户确权路由中并跳转
-            let merChantId = result.substr(result.lastIndexOf("=") + 1);
-            that.$router.replace(`/home/merchantConfirm/${merChantId}`);
-          } else if (result.indexOf("0x") === 0) {
-            // alert('address')
-            //如果扫码结果是钱包地址，则保存该地址并返回上一个页面
-            that.$store.commit("setWalletAddress", result);
-            // alert('setWalletAddress---' + that.$store.state.walletAddress)
-            that.$router.replace(that.fromRouter);
-          } else {
-            that.$router.replace(that.fromRouter);
-          }
+          var strArr = result.split("?deviceCode=");
+          var deviceCode = strArr[strArr.length - 1];
+          that.closeScan();
+          that.$router.replace({
+            path: "/Scan/OpenDoor",
+            query: { deviceCode: deviceCode },
+          });
         } else {
           // 失败，关闭控件，重新扫描
           Toast.fail("二维码识别失败，请重试");
-          that.$router.replace(that.fromRouter);
         }
-        that.closeScan();
       }
     },
     // 开始扫描

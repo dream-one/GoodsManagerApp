@@ -29,7 +29,7 @@
     <div class="nav">
       <van-grid :column-num="3">
         <van-grid-item to="/Scan" icon="enlarge" text="扫码开门" />
-        <van-grid-item @click="tishi" icon="gold-coin" text="订单" />
+        <van-grid-item to="/OrderList" icon="gold-coin" text="订单" />
         <van-grid-item icon="cart" to="/AddGoods" text="商品库" />
         <van-grid-item icon="more-o" @click="tishi" size="20" text="其他" />
       </van-grid>

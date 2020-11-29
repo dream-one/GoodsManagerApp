@@ -127,7 +127,7 @@ export default {
 }
 .bottom {
   width: 90%;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   transform: translate(5%); /* 50%为自身尺寸的一半 */
 }

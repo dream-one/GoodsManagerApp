@@ -9,31 +9,32 @@
         color="#fff"
       />
     </my-head>
-
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        title-style="text-align:left"
-        v-for="item in list"
-        is-link
-        :to="'/Order/OrderDetail?orderNo=' + item.OrderNo"
-        border
-        :value="'￥' + item.Amount"
-        :key="item.Id"
-        center
-        :label="item.CreateTime"
+    <div class="container">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
       >
-        <template #title>
-          <span class="custom-title">{{ item.OrderNo }}</span>
-          <van-tag v-if="item.IsPay == true" type="success">已支付</van-tag>
-          <van-tag v-else type="danger">未支付</van-tag>
-        </template>
-      </van-cell>
-    </van-list>
+        <van-cell
+          title-style="text-align:left"
+          v-for="item in list"
+          is-link
+          :to="'/Order/OrderDetail?orderNo=' + item.OrderNo"
+          border
+          :value="'￥' + item.Amount"
+          :key="item.Id"
+          center
+          :label="item.CreateTime"
+        >
+          <template #title>
+            <span class="custom-title">{{ item.OrderNo }}</span>
+            <van-tag v-if="item.IsPay == true" type="success">已支付</van-tag>
+            <van-tag v-else type="danger">未支付</van-tag>
+          </template>
+        </van-cell>
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -48,7 +49,7 @@ export default {
       loading: false,
       finished: false,
       page: 0,
-      limit: 10
+      limit: 20,
     };
   },
   computed: {
@@ -62,9 +63,7 @@ export default {
       }
     },
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     onLoad() {
       this.loading = true;
@@ -72,9 +71,9 @@ export default {
         page: this.page,
         limit: this.limit,
         mch_id: this.UserId,
-        deviceCode:this.$route.query.deviceCode
+        deviceCode: this.$route.query.deviceCode,
       };
-    
+
       GetAllOrder(obj).then((res) => {
         this.loading = false;
         if (res.code == 200) {
@@ -105,5 +104,8 @@ export default {
 }
 .van-cell__value {
   flex: 0.2;
+}
+.container{
+  height: 100vh;
 }
 </style>

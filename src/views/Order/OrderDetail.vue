@@ -45,7 +45,7 @@
         :key="index"
         :price="item.Money"
         :title="item.Name"
-        :thumb="$store.state.BaseUrl + item.ImageUrl"
+        :thumb="BaseUrl + item.ImageUrl"
       />
     </div>
   </div>
@@ -53,6 +53,7 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
+import { mapState } from "vuex";
 import { GetOrderByNo } from "../../api/api";
 export default {
   data() {
@@ -62,6 +63,9 @@ export default {
       phone: "",
       goodsList: [],
     };
+  },
+  computed: {
+    ...mapState(["BaseUrl"]),
   },
   mounted() {
     GetOrderByNo({ orderNo: this.$route.query.orderNo }).then((res) => {

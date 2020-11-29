@@ -47,10 +47,7 @@ const routes = [
   {
     path: '/Order/OrderDetail',
     component: OrderDetail,
-    name: 'OrderDetail',
-    meta: {
-      alive: true//keep-alive
-    }
+    name: 'OrderDetail'
   },
   {
     path: '/Login',

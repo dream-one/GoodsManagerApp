@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-head title="订单列表">
+    <my-head :title="title">
       <van-icon
         @click="$router.go(-1)"
         name="arrow-left"
@@ -48,7 +48,7 @@ export default {
       loading: false,
       finished: false,
       page: 0,
-      limit: 10,
+      limit: 10
     };
   },
   computed: {
@@ -62,19 +62,19 @@ export default {
       }
     },
   },
+  mounted() {
 
+  },
   methods: {
-    getOrderList() {},
-    onSearch(val) {
-      console.log(val);
-    },
     onLoad() {
       this.loading = true;
       let obj = {
         page: this.page,
         limit: this.limit,
         mch_id: this.UserId,
+        deviceCode:this.$route.query.deviceCode
       };
+    
       GetAllOrder(obj).then((res) => {
         this.loading = false;
         if (res.code == 200) {

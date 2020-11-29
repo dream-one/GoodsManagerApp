@@ -49,7 +49,7 @@ export default {
 
       const toIndex = to.meta.index;
       const fromIndex = from.meta.index;
-      console.log(toIndex, fromIndex);
+      // console.log(toIndex, fromIndex);
       if (toIndex == undefined || fromIndex == undefined) {
         return;
       }

@@ -12,11 +12,11 @@
     <div class="infoHead">
       <van-grid :column-num="2">
         <van-grid-item>
-          <div class="red">{{deviceData.totalIncome}} 元</div>
+          <div class="red">{{ deviceData.totalIncome }} 元</div>
           <div>成交量</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">
-          <div class="red">{{deviceData.totalOrder}} 单</div>
+          <div class="red">{{ deviceData.totalOrder }} 单</div>
           <div>订单量</div>
         </van-grid-item>
       </van-grid>
@@ -29,7 +29,8 @@
     </div> -->
     <div class="infoMain">
       <van-grid :column-num="3">
-        <van-grid-item icon="info" text="设备信息" @click="tishi"> </van-grid-item>
+        <van-grid-item icon="info" text="设备信息" @click="tishi">
+        </van-grid-item>
         <van-grid-item
           :to="
             '/Device/GoodsShelves?deviceCode=' + this.$route.query.deviceCode
@@ -37,7 +38,12 @@
           icon="cart"
           text="商品上架"
         ></van-grid-item>
-        <van-grid-item icon="balance-list" text="订单明细"  @click="tishi"> </van-grid-item>
+        <van-grid-item
+          icon="balance-list"
+          text="订单明细"
+          :to="'/OrderList?deviceCode=' + this.$route.query.deviceCode"
+        >
+        </van-grid-item>
       </van-grid>
     </div>
   </div>
@@ -64,10 +70,10 @@ export default {
       }
     });
   },
-  methods:{
-    tishi(){
-      Toast.fail('暂未开放')
-    }
+  methods: {
+    tishi() {
+      Toast.fail("暂未开放");
+    },
   },
   components: {
     MyHead,

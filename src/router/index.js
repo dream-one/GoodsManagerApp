@@ -68,10 +68,7 @@ const routes = [
   {
     path: '/OrderList',
     name: 'OrderList',
-    component: OrderList,
-    meta: {
-      alive: true//keep-alive
-    }
+    component: OrderList
   },
   {
     path: '/Buhuo/BuHuoCreate',

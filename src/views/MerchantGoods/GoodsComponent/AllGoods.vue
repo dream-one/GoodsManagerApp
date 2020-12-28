@@ -13,7 +13,7 @@
               clickable
               :title="item.Name"
               value=""
-              :label="'售价:' + item.Price + '元'"
+              :label="'单价:' + item.Price + '元/' + item.Unit"
               title-style="text-align:left"
             >
               <template #icon>
@@ -48,7 +48,7 @@ import { mapState } from "vuex";
 
 export default {
   props: ["searchValue"],
-  data() {
+  data:function() {
     return {
       index: 1,
       limit: 10,
@@ -59,7 +59,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["UserId", "BaseUrl"]),
+    ...mapState(["mchId", "BaseUrl"]),
     dataList() {
       if (this.searchValue) {
         //如果搜索框里有值
@@ -80,10 +80,9 @@ export default {
     },
   },
   mounted() {
-    console.log("all");
   },
   methods: {
-    onSearch(val) {
+    onSearch:function(val) {
       this.list = [];
       this.index = 1;
       this.finished = false;
@@ -95,7 +94,7 @@ export default {
       GetGoods({
         page: this.index,
         limit: 10,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: val,
       }).then((res) => {
         if (res.code == 0) {
@@ -103,13 +102,13 @@ export default {
         }
       });
     },
-    onLoad() {
+    onLoad:function() {
       // 异步更新数据
       this.loading = true;
       let obj = {
         page: this.index,
         limit: this.limit,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: this.searchValue,
       };
       GetGoods(obj).then((res) => {
@@ -129,7 +128,7 @@ export default {
       });
       this.index++;
     },
-    AddGoods(id) {
+    AddGoods:function(id) {
       this.$router.push({ path: "EditGoods", query: { id } });
     },
   },

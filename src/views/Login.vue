@@ -31,14 +31,14 @@
 import { Login } from "../api/api";
 import { Toast } from "vant";
 export default {
-  data() {
+  data: function () {
     return {
       username: "",
       password: "",
     };
   },
   methods: {
-    onSubmit(values) {
+    onSubmit: function (values) {
       // Toast(Login)
       Toast.loading({
         message: "加载中...",
@@ -51,9 +51,12 @@ export default {
             //写入本地存储用户信息
             var storage = window.localStorage;
             storage["user_id"] = res.data.id;
-            this.$store.commit("setUserId"); //设置用户Id
             storage["user_name"] = res.data.name;
             storage["token"] = res.data.token;
+            storage["role"] = res.data.role;
+            storage["email"] = res.data.email;
+            storage["mchId"] = res.data.mchId
+            this.$store.commit("setUserId", res.data); //设置用户Id
             Toast.success("登录成功");
 
             //跳转到主页

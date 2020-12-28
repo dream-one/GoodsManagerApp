@@ -26,8 +26,8 @@
           v-for="(item, index) in goodsList"
           :key="index"
           :title="item.Goods.Name"
-          :value="'x' + item.ReplenishmentNum"
-          :label="'售价：' + item.Goods.Price"
+          :value="'x' + item.ReplenishmentNum + ' '+item.Goods.Unit"
+          :label="'重量：' + item.Goods.Weight"
           center
         />
       </van-cell-group>
@@ -46,10 +46,10 @@
 
 <script>
 import MyHead from "../../components/HeadTop";
-import { GetSupplementDetail, DeleteSupplement} from "../../api/api";
-import { Toast,Dialog } from 'vant';
+import { GetSupplementDetail, DeleteSupplement } from "../../api/api";
+import { Toast, Dialog } from "vant";
 export default {
-  data() {
+  data:function() {
     return {
       deviceCode: "",
       goodsNum: 0,
@@ -63,21 +63,21 @@ export default {
     MyHead,
   },
   methods: {
-    del() {
+    del:function() {
       Dialog.confirm({
         title: "提示",
         message: "确认要删除吗？",
       })
         .then(() => {
           var id = this.$route.query.Id;
-          DeleteSupplement({id:id}).then(res=>{
-              if(res.code==200){
-                  Toast.success("删除成功")
-                  this.$router.go(-1)
-              }else{
-                  Toast.fail(res.msg)
-              }
-          })
+          DeleteSupplement({ id: id }).then((res) => {
+            if (res.code == 200) {
+              Toast.success("删除成功");
+              this.$router.go(-1);
+            } else {
+              Toast.fail(res.msg);
+            }
+          });
         })
         .catch(() => {
           return;

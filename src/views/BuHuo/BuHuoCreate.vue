@@ -93,7 +93,7 @@
 import MyHead from "../../components/HeadTop";
 import { GetDeviceBuHuoByCode } from "../../api/api";
 export default {
-  data() {
+  data:function() {
     return {
       haveBuHuo: false, //是否有补货单 true-有  false-无
       buhuoList: [], //补货单列表

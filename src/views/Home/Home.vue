@@ -44,7 +44,7 @@ import Foot from "../../components/Foot";
 import { GetHomeData } from "../../api/api";
 import { Toast } from "vant";
 export default {
-  data() {
+  data:function() {
     return {
       TodayData: {
         TodayIncome: "***",
@@ -59,12 +59,12 @@ export default {
     Foot,
   },
   methods: {
-    tishi() {
+    tishi:function() {
       Toast.fail("暂未开放");
     },
   },
   mounted() {
-    var mch_id = window.localStorage.getItem("user_id");
+    var mch_id = window.localStorage.getItem("mchId");
     GetHomeData({ mch_id }).then((res) => {
       if (res.code == 200) {
         this.TodayData = res.data;

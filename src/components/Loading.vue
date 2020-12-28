@@ -1,18 +1,18 @@
 <template>
   <div class="loading">
-    <van-loading type="spinner" color="#1989fa" />
+    <van-loading type="circular" color="#fff" />
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import { Loading } from "vant";
+import { Loading} from "vant";
 
 Vue.use(Loading);
 
 export default {
   name: "LOADING",
-  data() {
+  data:function() {
     return {};
   },
 };

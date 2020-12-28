@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Loading v-show="LOADING"></Loading>
+    <van-overlay  :show="LOADING" :lock-scroll="true">
+      <Loading v-show="true"></Loading>
+    </van-overlay>
 
     <div class="main">
       <!-- <transition :name="transitionName" mode="out-in"> -->
@@ -18,19 +20,19 @@ import Loading from "./components/Loading";
 import { mapState, mapMutations, mapAction } from "vuex";
 
 export default {
-  data() {
+  data:function() {
     return {
       transitionName: "",
     };
   },
   components: {
-    Loading,
+    Loading:Loading,
   },
   methods: {
-    onClickLeft() {
+    onClickLeft:function() {
       Toast("返回");
     },
-    onClickRight() {
+    onClickRight:function() {
       Toast("按钮");
     },
   },
@@ -42,7 +44,7 @@ export default {
     this.$store.commit("setUserId");
   },
   watch: {
-    $route(to, from) {
+    $route:function(to, from) {
       this.transitionName = "";
 
       let toName = to.name;
@@ -68,7 +70,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   height: 100%;
 }
 .main {

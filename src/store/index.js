@@ -5,7 +5,16 @@ export default new Vuex.Store({
   state: {
     LOADING: false,
     BaseUrl: '',
-    UserId: ''
+    UserId: '',
+    name: '',
+    email: '',
+    role: '',
+    mchId:''
+  },
+  getters: {
+    roleName: state => {
+      return state.role == 1 ? '补货员' : '管理员'
+    }
   },
   mutations: {
     showLoading(state) {
@@ -23,9 +32,23 @@ export default new Vuex.Store({
       }
       state.BaseUrl = http + "//" + host
     },
-    setUserId(state) {
-      var userid = window.localStorage.getItem("user_id");
-      state.UserId = userid;
+    setUserId(state, user) {
+      if (!user) {
+        var storage = window.localStorage;
+        state.name = storage["user_name"]
+        state.role = storage["role"]
+        state.UserId = storage["user_id"]
+        state.email = storage["email"]
+        state.mchId = storage["mchId"]
+
+      } else {
+        state.name = user.name
+        state.role = user.role
+        state.email = user.email
+        state.UserId = user.id
+        state.mchId = user.mchId
+
+      }
     }
   }
 })

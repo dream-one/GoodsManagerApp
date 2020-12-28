@@ -13,7 +13,7 @@
               clickable
               :title="item.Name"
               value=""
-              :label="'售价:' + item.SellPrice + '元'"
+              :label="'单价:' + item.SellPrice + '元/' + item.Unit"
               title-style="text-align:left"
             >
               <template #icon>
@@ -62,7 +62,7 @@ import { Dialog, Toast } from "vant";
 export default {
   props: ["searchValue"],
 
-  data() {
+  data:function() {
     return {
       index: 1,
       limit: 15,
@@ -73,7 +73,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["UserId", "BaseUrl"]),
+    ...mapState(["mchId", "BaseUrl"]),
     dataList() {
       if (this.searchValue) {
         //如果搜索框里有值
@@ -95,7 +95,7 @@ export default {
   },
   mounted() {},
   methods: {
-    onSearch(val) {
+    onSearch:function(val) {
       this.list = [];
       this.index = 1;
       this.finished = false;
@@ -106,7 +106,7 @@ export default {
       GetMerchantGoods({
         page: this.index,
         limit: 10,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: val,
       }).then((res) => {
         if (res.code == 0) {
@@ -114,13 +114,13 @@ export default {
         }
       });
     },
-    onLoad() {
+    onLoad:function() {
       // 异步更新数据
       this.loading = true;
       let obj = {
         page: this.index,
         limit: this.limit,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: this.searchValue,
       };
       GetMerchantGoods(obj).then((res) => {
@@ -140,20 +140,20 @@ export default {
       });
       this.index++;
     },
-    Edit(goodsId, mgId) {
+    Edit:function(goodsId, mgId) {
       this.$router.push({
         path: "EditGoods",
         query: { id: goodsId, mgId, flag: "edit" },
       });
     },
-    beforeClose({ name, position, instance }) {},
+    beforeClose:function({ name, position, instance }) {},
     //
-    Del(id, index) {
+    Del:function(id, index) {
       Dialog.confirm({
         message: "请谨慎操作，所有设备将删除该商品",
       })
         .then(() => {
-          DeleteMerchantGoods({ id, mch_id: this.$store.state.UserId }).then(
+          DeleteMerchantGoods({ id, mch_id: this.$store.state.mchId }).then(
             (res) => {
               if (res.code == 200) {
                 if (res.data == true) {

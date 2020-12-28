@@ -1,10 +1,12 @@
 //统一管理接口
 import { get, post } from "./http.js"; //引入get与post
 
-export const GetDevice = p => get("/api/Device/GetDevice?mchId=" + p);
+export const GetDevice = p => get("/api/Device/GetDevice?userId=" + p);
 
 //登录
 export const Login = p => post("/api/Account/Login", p);
+
+export const GetUserInfo = p => get("/api/Account/GetUserInfo", p);
 
 //获取主页数据
 export const GetHomeData = p => get("/api/Account/GetHomeData", p);

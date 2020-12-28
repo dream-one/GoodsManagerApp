@@ -37,7 +37,7 @@ import MerchantGoods from "./GoodsComponent/MerchantGoods";
 import { Toast } from "vant";
 
 export default {
-  data() {
+  data:function() {
     return {
       searchValue: "",
       title: "",
@@ -49,11 +49,11 @@ export default {
     MerchantGoods,
   },
   methods: {
-    onClick(name, title) {
+    onClick:function(name, title) {
       this.title = title;
       Toast(title);
     },
-    onSearch() {
+    onSearch:function() {
       console.log(this.title)
       if (this.title == "商品云库") {
         this.$refs.allGoods.onSearch(this.searchValue);

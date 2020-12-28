@@ -28,19 +28,23 @@
           <div class="itemCenter">
             <div class="goodsName">{{ item.Name }}</div>
             <div class="goodsLabel">
-              <span v-if="type == 'capacity'">容量 {{ item.Capacity }}</span>
-              <span v-if="type == 'stock'">库存 {{ item.Stock }}</span>
+              <span v-if="type == 'capacity'"
+                >容量 {{ item.Capacity }} 单位：{{ item.Unit }}</span
+              >
+              <span v-if="type == 'stock'"
+                >库存 {{ item.Stock }} 单位：{{ item.Unit }}</span
+              >
               <span v-if="type == 'confirmSupplement' || type == 'supplement'"
-                >补货数量</span
+                >补货数量 单位：{{ item.Unit }}</span
               >
             </div>
           </div>
           <div class="itemRight">
             <van-stepper
               :disabled="type == 'confirmSupplement'"
-              integer
+              :integer="item.Unit !== '斤'"
               min="0"
-              v-model="value[item.Id]"
+              v-model="test[item.Id]"
             />
           </div>
         </div>
@@ -60,12 +64,14 @@ import {
 import { Toast, Dialog } from "vant";
 import { mapState } from "vuex";
 export default {
-  data() {
+  data: function () {
     return {
       type: "",
-      value: [],
+      // value: [],
       list: [],
+      test: {},
       add: [], //那些项目添加了
+      deviceCode: "",
     };
   },
   computed: {
@@ -85,30 +91,36 @@ export default {
     ...mapState(["BaseUrl"]),
   },
   methods: {
-    confirm() {
+    confirm: function () {
       Dialog.confirm({
         title: "提示",
         message: "确认要提交吗？",
       })
         .then(() => {
           if (this.type == "confirmSupplement") {
-            ConfirmSupplement({ Id: this.$route.query.id }).then((res) => {
+            ConfirmSupplement({ Id: this.$route.query.id ,deviceCode:this.deviceCode}).then((res) => {
               if (res.code == 200) {
                 Toast.success(res.data);
                 this.$router.go(-1);
+              }else{
+                Toast.fail(res.msg)
               }
             });
             return;
           }
           //确认
           let arr = [];
-          this.value.forEach((el, index) => {
-            //10 1 值 下标（id）
-            let obj = { Id: index, Value: el, Type: this.type };
+          var keys = Object.keys(this.test); //获取test对象的所有属性 属性即为id,
+          keys.forEach((id) => {
+            //遍历属性
+            let obj = { Id: id, Value: this.test[id], Type: this.type };
             arr.push(obj);
           });
           //提交确认
-          EditSupplement(arr).then((res) => {
+          EditSupplement({
+            supplements: arr,
+            deviceCode: this.deviceCode,
+          }).then((res) => {
             if (res.code == 200) {
               Toast.success("修改成功");
               this.$router.go(-1);
@@ -125,6 +137,7 @@ export default {
   mounted() {
     //获取设备码
     let deviceCode = this.$route.query.deviceCode;
+    this.deviceCode = deviceCode;
     if (this.type == "confirmSupplement") {
       //如果是确认补货，单独获取数据。获取补货单下的商品
       GetSupplementGoodsList({ supplementId: this.$route.query.id }).then(
@@ -132,7 +145,7 @@ export default {
           this.list = res.data;
           this.list.forEach((element, index, arr) => {
             element.forEach((el) => {
-              this.value[el.Id] = el.ReplenishmentNum;
+              this.$set(this.test, el.Id, el.ReplenishmentNum);
             });
           });
         }
@@ -146,11 +159,11 @@ export default {
         this.list.forEach((element) => {
           element.forEach((el) => {
             if (this.type == "capacity") {
-              this.value[el.Id] = el.Capacity;
+              this.$set(this.test, el.Id, el.Capacity);
             } else if (this.type == "stock") {
-              this.value[el.Id] = el.Stock;
+              this.$set(this.test, el.Id, el.Stock);
             } else if (this.type == "supplement") {
-              this.value[el.Id] = el.Capacity - el.Stock;
+              this.$set(this.test, el.Id, el.Capacity - el.Stock);
             }
           });
         });

@@ -43,7 +43,7 @@ import MyHead from "../../components/HeadTop";
 import { mapState } from "vuex";
 import { GetAllOrder } from "../../api/api";
 export default {
-  data() {
+  data: function () {
     return {
       list: [],
       loading: false,
@@ -53,7 +53,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(["UserId"]),
     title() {
       var deviceCode = this.$route.query.deviceCode;
       if (deviceCode) {
@@ -65,12 +64,12 @@ export default {
   },
   mounted() {},
   methods: {
-    onLoad() {
+    onLoad: function () {
       this.loading = true;
       let obj = {
         page: this.page,
         limit: this.limit,
-        mch_id: this.UserId,
+        mch_id: window.localStorage.getItem("mchId"),
         deviceCode: this.$route.query.deviceCode,
       };
 
@@ -105,7 +104,7 @@ export default {
 .van-cell__value {
   flex: 0.2;
 }
-.container{
+.container {
   height: 100vh;
 }
 </style>

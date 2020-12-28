@@ -48,7 +48,7 @@
    
 <script>
 export default {
-  data() {
+  data:function() {
     return {
       active: 0,
     };

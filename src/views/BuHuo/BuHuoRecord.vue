@@ -41,7 +41,7 @@ import MyHead from "../../components/HeadTop";
 import { GetSupplement } from "../../api/api";
 
 export default {
-  data() {
+  data:function() {
     return {
       list: [],
       loading: false,
@@ -52,11 +52,11 @@ export default {
   },
   computed: {},
   methods: {
-    getList() {
+    getList:function() {
       this.loading = true;
-      var mch_id = this.$store.state.UserId;
+      var mch_id = this.$store.state.mchId;
       if (!mch_id) {
-        mch_id = window.localStorage.getItem("user_id");
+        mch_id = window.localStorage.getItem("mchId");
       }
       GetSupplement({
         page: this.page,
@@ -78,7 +78,7 @@ export default {
         this.loading = false;
       });
     },
-    onLoad() {
+    onLoad:function() {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       this.page++;

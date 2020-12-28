@@ -53,7 +53,7 @@ import Foot from "../../components/Foot";
 import { GetDevice } from "../../api/api";
 import { Toast } from "vant";
 export default {
-  data() {
+  data:function() {
     return {
       list: [], //设备列表
       topData: {},
@@ -68,9 +68,9 @@ export default {
     Foot,
   },
   methods: {
-    load() {
-      var merchId = window.localStorage.getItem("user_id");
-      GetDevice(merchId).then((res) => {
+    load:function() {
+      var userId = window.localStorage.getItem("user_id");
+      GetDevice(userId).then((res) => {
         console.log(res);
         if (res.code == 200) {
           this.list = res.data.DeviceStates;
@@ -81,7 +81,7 @@ export default {
         }
       });
     },
-    onRefresh() {
+    onRefresh:function() {
       this.load()
     },
   },

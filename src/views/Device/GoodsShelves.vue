@@ -57,7 +57,7 @@ import {
 } from "../../api/api";
 import { Toast, Dialog } from "vant";
 export default {
-  data() {
+  data:function() {
     return {
       list: [],
       dataList: [],
@@ -68,7 +68,7 @@ export default {
     MyHead,
   },
   methods: {
-    text(floorData, index) {
+    text:function(floorData, index) {
       if (!floorData) {
         return "空";
       }
@@ -80,7 +80,7 @@ export default {
     },
     //floorData--这一层的数据  index--点击的这个框框  floor--点击的层数
     // //作用：如果已经有商品就不能再点击跳转了
-    to(floorData, index, floor) {
+    to:function(floorData, index, floor) {
       if (!floorData || !floorData[index - 1]) {
         return (
           "/Device/GoodsShelves/ChooeseGoods?deviceCode=" +
@@ -91,7 +91,7 @@ export default {
       }
     },
     //floorData--这一层的数据  index--点击的这个框框
-    icon(floorData, index) {
+    icon:function(floorData, index) {
       if (floorData.length == 0 || !floorData[index - 1]) {
         return;
       } else {
@@ -103,7 +103,7 @@ export default {
      * floorData---某一层上摆放的商品数组
      * index--点击所在下标
      */
-    del(floorData, index) {
+    del:function(floorData, index) {
       if (!floorData) {
         return;
       }
@@ -127,7 +127,7 @@ export default {
         .catch(() => {});
     },
     //获取货道数据
-    getList() {
+    getList:function() {
       GetDeviceFloorNum({ deviceCode: this.$route.query.deviceCode }).then(
         (res) => {
           // console.log(res);

@@ -48,7 +48,7 @@ import MyHead from "../../components/HeadTop";
 import Foot from "../../components/Foot";
 import { GetDeviceBuHuo } from "../../api/api";
 export default {
-  data() {
+  data:function() {
     return {
       list: [], //列表
       buHuoNum: 0, //补货单

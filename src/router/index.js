@@ -112,7 +112,8 @@ const routes = [
     name: 'DeviceDetail',
     component: DeviceDetail,
     meta: {
-      index: 1
+      index: 1,
+      alive: true//keep-alive
     }
   },
   {

@@ -55,7 +55,7 @@ import { GetDeviceData } from "../../api/api";
 import { Toast } from "vant";
 
 export default {
-  data() {
+  data:function() {
     return {
       deviceData: {
         totalIncome: 0,
@@ -71,7 +71,7 @@ export default {
     });
   },
   methods: {
-    tishi() {
+    tishi:function() {
       Toast.fail("暂未开放");
     },
   },

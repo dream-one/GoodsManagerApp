@@ -38,7 +38,7 @@
               :title="item.Name"
               @click="toggle(index)"
               value=""
-              :label="'售价:' + item.SellPrice + '元'"
+              :label="'单价:' + item.SellPrice + '元/'+item.Unit"
               title-style="text-align:left"
             >
               <template #icon>
@@ -73,7 +73,7 @@ import { Toast } from "vant";
 import { mapState } from "vuex";
 
 export default {
-  data() {
+  data:function() {
     return {
       index: 1,
       limit: 10,
@@ -86,7 +86,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["BaseUrl", "UserId"]),
+    ...mapState(["BaseUrl", "mchId"]),
     dataList() {
       if (this.searchValue) {
         //如果搜索框里有值
@@ -110,15 +110,15 @@ export default {
     MyHead,
   },
   methods: {
-    go() {
+    go:function() {
       //前往商品列表页
       this.$router.push("/AddGoods");
     },
-    toggle(index) {
+    toggle:function(index) {
       //切换可见状态
       this.$refs.checkboxes[index].toggle();
     },
-    onSearch(val) {
+    onSearch:function(val) {
       this.list = [];
       this.index = 1;
       this.finished = false;
@@ -129,7 +129,7 @@ export default {
       GetMerchantGoods({
         page: this.index,
         limit: 10,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: val,
       }).then((res) => {
         if (res.code == 0) {
@@ -137,13 +137,13 @@ export default {
         }
       });
     },
-    onLoad() {
+    onLoad:function() {
       // 异步更新数据
       this.loading = true;
       let obj = {
         page: this.index,
         limit: this.limit,
-        mchId: this.UserId,
+        mchId: this.mchId,
         goodsName: this.searchValue,
       };
       GetMerchantGoods(obj).then((res) => {
@@ -164,7 +164,7 @@ export default {
       });
       this.index++;
     },
-    confirm() {
+    confirm:function() {
       if (this.result.length == 0) {
         return Toast.fail("请选择要上架的商品");
       }

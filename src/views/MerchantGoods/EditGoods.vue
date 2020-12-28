@@ -30,16 +30,24 @@
         v-model="SellPrice"
         type="number"
         name="SellPrice"
-        label="售价"
-        :rules="[{ required: true, message: '请填写售价' }]"
-      />
+        label="单价"
+        :rules="[{ required: true, message: '请填写单价' }]"
+      >
+        <template #button>
+          <span>元/{{ goods.Unit }}</span>
+        </template>
+      </van-field>
       <van-field
         v-model="CostPrice"
         type="number"
         name="CostPrice"
         label="成本价"
         :rules="[{ required: true, message: '请填写成本价' }]"
-      />
+      >
+        <template #button>
+          <span>元/{{ goods.Unit }}</span>
+        </template>
+      </van-field>
       <div style="margin: 16px">
         <van-button round block type="info" native-type="submit">
           保存
@@ -60,7 +68,7 @@ import { mapState } from "vuex";
 
 import { Toast } from "vant";
 export default {
-  data() {
+  data:function() {
     return {
       goods: {},
       Name: "",
@@ -70,12 +78,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(["UserId", "BaseUrl"]),
+    ...mapState(["mchId", "BaseUrl"]),
   },
   methods: {
-    onSubmit(values) {
+    onSubmit:function(values) {
       values.Goods_Id = this.$route.query.id;
-      values.Merchant_Id = this.$store.state.UserId;
+      values.Merchant_Id = this.$store.state.mchId;
       AddMerchantGoods(values).then((res) => {
         if (res.code == 200) {
           Toast.success("添加成功");
@@ -98,6 +106,7 @@ export default {
           this.goods = res.data;
           this.Name = this.goods.Name;
           this.SellPrice = this.goods.SellPrice;
+          this.CostPrice = this.goods.CostPrice;
         }
       });
     } else {
@@ -107,6 +116,7 @@ export default {
           this.goods = res.data;
           this.Name = this.goods.Name;
           this.SellPrice = this.goods.Price;
+          this.CostPrice = this.goods.Price;
         }
       });
     }

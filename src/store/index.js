@@ -9,11 +9,15 @@ export default new Vuex.Store({
     name: '',
     email: '',
     role: '',
-    mchId:''
+    mchId: '',
+    deviceList: []
   },
   getters: {
     roleName: state => {
       return state.role == 1 ? '补货员' : '管理员'
+    },
+    deviceList: state => {
+      return state.role == 1 ? state.deviceList : '全部'
     }
   },
   mutations: {
@@ -40,14 +44,14 @@ export default new Vuex.Store({
         state.UserId = storage["user_id"]
         state.email = storage["email"]
         state.mchId = storage["mchId"]
-
+        state.deviceList = storage["deviceList"]
       } else {
         state.name = user.name
         state.role = user.role
         state.email = user.email
         state.UserId = user.id
         state.mchId = user.mchId
-
+        state.deviceList = user.deviceList
       }
     }
   }

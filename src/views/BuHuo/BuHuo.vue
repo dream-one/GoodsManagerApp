@@ -61,7 +61,7 @@ export default {
     Foot,
   },
   mounted() {
-    GetDeviceBuHuo({ mchId: 1 }).then((res) => {
+    GetDeviceBuHuo({ mchId: this.$store.state.mchId }).then((res) => {
       if (res.code == 200) {
         this.list = res.data.list;
         this.buHuoNum = res.data.BuHuoNum;

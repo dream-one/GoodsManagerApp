@@ -87,6 +87,8 @@ export default {
       } else if (type == "confirmSupplement") {
         return "确认补货";
       }
+
+      
     },
     ...mapState(["BaseUrl"]),
   },

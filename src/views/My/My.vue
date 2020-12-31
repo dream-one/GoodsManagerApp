@@ -5,6 +5,7 @@
       <van-cell title="用户名" title-style="text-align:left" :value="name" />
       <van-cell title="角色" title-style="text-align:left" :value="role" />
       <van-cell title="邮箱" title-style="text-align:left" :value="email" />
+      <van-cell title="可操作的设备" title-style="text-align:left" :label="deviceList" />
     </van-cell-group>
     <div class="logout" @click="logout">退出登录</div>
     <Foot />
@@ -18,8 +19,7 @@ import { Dialog } from "vant";
 import { GetUserInfo } from "../../api/api";
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     logout: function () {
@@ -28,6 +28,7 @@ export default {
         message: "确认要退出吗？",
       }).then(() => {
         window.localStorage.clear();
+        location.reload();
         this.$router.replace("/Login");
       });
     },
@@ -55,6 +56,9 @@ export default {
     },
     email() {
       return this.$store.state.email;
+    },
+    deviceList() {
+      return this.$store.getters.deviceList;
     },
   },
   components: {

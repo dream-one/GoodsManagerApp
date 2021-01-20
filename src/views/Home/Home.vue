@@ -8,7 +8,7 @@
     <div class="infoHead">
       <van-grid :column-num="4">
         <van-grid-item>
-          <div class="red">{{ TodayData.TotalIncome }} 元</div>
+          <div class="red">{{ TodayData.TodayIncome }} 元</div>
           <div>今日收入</div>
         </van-grid-item>
         <van-grid-item icon="photo-o" text="文字">

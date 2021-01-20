@@ -27,6 +27,15 @@ export default new Vuex.Store({
     hideLoading(state) {
       state.LOADING = false
     },
+    clear(state){
+      state.deviceList=[]
+      state.mchId=''
+      state.role=''
+      state.email=''
+      state.name=''
+      state.UserId=''
+      state.BaseUrl=''
+    },
     setUrl(state) {
       var http = window.location.protocol; //http:
       var host = window.location.host; //49.665:44 主机名加端口

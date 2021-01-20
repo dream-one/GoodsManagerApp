@@ -1,13 +1,25 @@
 <template>
-  <div class="scan">
-    <div id="bcid">
-      <div style="height: 40%"></div>
-      <p class="tip">...载入中...</p>
+  <div>
+    <my-head title="扫码">
+      <van-icon
+        @click="$router.replace('/Home')"
+        name="arrow-left"
+        size="25"
+        slot="left"
+        color="#fff"
+      />
+    </my-head>
+    <div @dblclick="back" class="scan">
+      <div @dblclick="back" id="bcid">
+        <div @dblclick="back" style="height: 40%"></div>
+        <p class="tip">...载入中...</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import MyHead from "../../components/HeadTop";
 import { Toast } from "vant";
 /**
  * h5+ 扫码功能实现
@@ -20,7 +32,9 @@ export default {
       fromRouter: "", //进入扫码页面的上一个路由
     };
   },
-
+  components: {
+    MyHead,
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 通过 `vm` 访问组件实例，记录上一个页面的路由，
@@ -29,12 +43,16 @@ export default {
   },
   mounted() {
     this.startRecognize();
+    Toast("双击屏幕返回")
   },
   beforeDestroy() {
     this.closeScan();
   },
 
   methods: {
+    back(){
+      this.$router.go(-1)
+    },
     // 创建扫描控件
     startRecognize() {
       let that = this;

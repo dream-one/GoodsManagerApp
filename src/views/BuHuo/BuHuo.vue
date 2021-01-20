@@ -23,21 +23,22 @@
         </van-grid-item>
       </van-grid>
     </div>
-
-    <div>
-      <van-cell-group>
-        <van-cell
-          title-style="text-align:left"
-          v-for="(item, index) in list"
-          :key="index"
-          :title="'设备号：' + item.DeviceCode"
-          :label="'合计：容量 ' + item.Capacity + '/库存 ' + item.Stock"
-          value=""
-          is-link
-          center
-          :to="'/Buhuo/BuHuoCreate?deviceCode=' + item.DeviceCode"
-        />
-      </van-cell-group>
+    <div class="DeviceListContainer" style="height:60vh">
+      <div class="DeviceList" >
+        <van-cell-group>
+          <van-cell
+            title-style="text-align:left"
+            v-for="(item, index) in list"
+            :key="index"
+            :title="'设备号：' + item.DeviceCode"
+            :label="'合计：容量 ' + item.Capacity + '/库存 ' + item.Stock"
+            value=""
+            is-link
+            center
+            :to="'/Buhuo/BuHuoCreate?deviceCode=' + item.DeviceCode"
+          />
+        </van-cell-group>
+      </div>
     </div>
     <Foot />
   </div>
@@ -48,7 +49,7 @@ import MyHead from "../../components/HeadTop";
 import Foot from "../../components/Foot";
 import { GetDeviceBuHuo } from "../../api/api";
 export default {
-  data:function() {
+  data: function () {
     return {
       list: [], //列表
       buHuoNum: 0, //补货单

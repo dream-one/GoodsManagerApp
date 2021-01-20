@@ -5,6 +5,7 @@
       success-text="刷新成功"
       v-model="isLoading"
       @refresh="onRefresh"
+      :disabled="isDisadled"
     >
       <div class="infoHead">
         <van-grid :column-num="3">
@@ -22,25 +23,26 @@
           </van-grid-item>
         </van-grid>
       </div>
-
-      <div class="DeviceList">
-        <van-cell-group>
-          <van-cell
-            title-style="text-align:left"
-            :label="item.State + ' ' + item.LastUpdateTime + ' 更新'"
-            center
-            value=""
-            v-for="item in list"
-            border
-            :key="item.Id"
-            :title="'设备号：' + item.DeviceCode"
-            size="large"
-            icon="bulb-o"
-            is-link
-            :to="'/Device/DeviceDetail?deviceCode=' + item.DeviceCode"
-          >
-          </van-cell>
-        </van-cell-group>
+      <div class="DeviceListContainer"  ref="rightContent">
+        <div class="DeviceList">
+          <van-cell-group>
+            <van-cell
+              title-style="text-align:left"
+              :label="item.State + ' ' + item.LastUpdateTime + ' 更新'"
+              center
+              value=""
+              v-for="item in list"
+              border
+              :key="item.Id"
+              :title="'设备号：' + item.DeviceCode"
+              size="large"
+              icon="bulb-o"
+              is-link
+              :to="'/Device/DeviceDetail?deviceCode=' + item.DeviceCode"
+            >
+            </van-cell>
+          </van-cell-group>
+        </div>
       </div>
     </van-pull-refresh>
     <Foot />
@@ -53,36 +55,64 @@ import Foot from "../../components/Foot";
 import { GetDevice } from "../../api/api";
 import { Toast } from "vant";
 export default {
-  data:function() {
+  data: function () {
     return {
       list: [], //设备列表
       topData: {},
       isLoading: false,
+      isDisadled: false,
     };
   },
   mounted() {
     this.load();
+    this.listenerFunction();
   },
   components: {
     MyHead,
     Foot,
   },
+  beforeDestroy() {
+    document.removeEventListener("scroll", this.listenerFunction);
+  },
   methods: {
-    load:function() {
-      var userId = window.localStorage.getItem("user_id");
-      GetDevice(userId).then((res) => {
-        console.log(res);
+    load() {
+      var merchId = window.localStorage.getItem("user_id");
+      GetDevice(merchId).then((res) => {
         if (res.code == 200) {
           this.list = res.data.DeviceStates;
           let { Total, OnLine, OffLine } = res.data;
           this.topData = { Total, OnLine, OffLine };
-        this.isLoading=false;
-
+          this.isLoading = false;
         }
       });
     },
-    onRefresh:function() {
-      this.load()
+    listenerFunction(e) {
+      var that = this;
+       this.$refs.rightContent.addEventListener(
+        "scroll",
+        this.handleScroll(function () {
+          let scrolled = that.$refs.rightContent.scrollTop;
+          if (scrolled <= 0) {
+            that.isDisadled = false;
+          } else {
+            that.isDisadled = true;
+          }
+        }),
+        true
+      );
+    },
+    handleScroll(fn, delay) {
+      let timer = null;
+      return function () {
+        //这里是每次变化要执行的函数
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(fn, delay);
+      };
+    },
+    onRefresh() {
+      this.load();
     },
   },
 };
@@ -99,9 +129,14 @@ export default {
   font-size: 13px;
 }
 .DeviceList {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .van-cell {
   justify-content: start !important;
+}
+.DeviceListContainer {
+  overflow: scroll;
+  height: 70vh;
+  margin-bottom: 50px;
 }
 </style>

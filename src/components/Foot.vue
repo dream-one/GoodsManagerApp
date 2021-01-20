@@ -4,7 +4,8 @@
       route
       active-color="#1989fa"
       v-model="active"
-      placeholder 
+      safe-area-inset-bottom	
+       
     >
       <van-tabbar-item to="/Home">
         <span>首页</span>

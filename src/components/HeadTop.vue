@@ -1,6 +1,6 @@
 <template>
   <!-- 头部导航栏 -->
-  <van-nav-bar :title="title" placeholder fixed z-index="99">
+  <van-nav-bar :title="title" safe-area-inset-top	 placeholder fixed z-index="99">
     <template v-slot:left>
       <slot name="left"></slot>
     </template>

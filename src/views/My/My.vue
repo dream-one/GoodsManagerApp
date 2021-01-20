@@ -5,7 +5,11 @@
       <van-cell title="用户名" title-style="text-align:left" :value="name" />
       <van-cell title="角色" title-style="text-align:left" :value="role" />
       <van-cell title="邮箱" title-style="text-align:left" :value="email" />
-      <van-cell title="可操作的设备" title-style="text-align:left" :label="deviceList" />
+      <van-cell
+        title="可操作的设备"
+        title-style="text-align:left"
+        :label="deviceList"
+      />
     </van-cell-group>
     <div class="logout" @click="logout">退出登录</div>
     <Foot />
@@ -28,8 +32,9 @@ export default {
         message: "确认要退出吗？",
       }).then(() => {
         window.localStorage.clear();
-        location.reload();
+        this.$store.commit("clear");
         this.$router.replace("/Login");
+        location.reload();
       });
     },
   },
@@ -89,7 +94,7 @@ export default {
 }
 .container {
   background-color: #f4f4f4;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
 }
 </style>

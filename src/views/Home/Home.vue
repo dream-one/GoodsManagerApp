@@ -20,7 +20,7 @@
           <div class="red">{{ TodayData.TotalIncome }} 元</div>
           <div>合计收入</div>
         </van-grid-item>
-        <van-grid-item icon="photo-o" text="文字">
+        <van-grid-item icon="photo-o" text="文字" to='/OrderList'>
           <div class="red">{{ TodayData.TotalOrderNum }} 单</div>
           <div>合计订单</div>
         </van-grid-item>

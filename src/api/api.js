@@ -76,5 +76,11 @@ export const GetSupplementGoodsList = p => get('/api/Supplement/GetSupplementGoo
 //获取所有订单
 export const GetAllOrder = p =>get('/api/Order/GetAllOrder',p)
 
+//获取所有订单
+export const GetOrderList = p => get('/Order/GetOrderList',p)
+
 //获取订单
 export const GetOrderByNo = p =>get('/api/Order/GetOrderByNo',p)
+
+//获取设备库存
+export const GetAdjustmentRecord = p =>get('/AdjustmentRecord/GetAdjustmentRecord',p)

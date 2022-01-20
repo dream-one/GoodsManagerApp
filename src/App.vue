@@ -15,6 +15,18 @@
   </div>
 </template>
 <script>
+window.onload = function() {
+  document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+      event.preventDefault()
+    }
+  })
+  document.addEventListener('gesturestart', function(event) {
+    event.preventDefault()
+  })
+}
+</script>
+<script>
 import Head from "./components/HeadTop";
 import Loading from "./components/Loading";
 import { mapState, mapMutations, mapAction } from "vuex";

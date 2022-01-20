@@ -44,6 +44,18 @@
           :to="'/OrderList?deviceCode=' + this.$route.query.deviceCode"
         >
         </van-grid-item>
+         <van-grid-item
+          icon="cart-circle"
+          text="设备库存"
+          :to="'/Device/DeviceStock?deviceCode=' + this.$route.query.deviceCode"
+        >
+        </van-grid-item>
+         <van-grid-item
+          icon="underway"
+          text="库存操作记录"
+          :to="'/Device/AdjustmentRecord?deviceCode=' + this.$route.query.deviceCode"
+        >
+        </van-grid-item>
       </van-grid>
     </div>
   </div>

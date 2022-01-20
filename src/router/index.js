@@ -19,6 +19,8 @@ import Course from '../views/BuHuo/Course'
 import AddGoods from '../views/MerchantGoods/AddGoods'
 import EditGoods from '../views/MerchantGoods/EditGoods'
 import OrderDetail from '../views/Order/OrderDetail'
+import DeviceStock from '../views/Device/DeviceStock'
+import AdjustmentRecord from '../views/Device/AdjustmentRecord'
 Vue.use(VueRouter)
 
 const routes = [
@@ -81,7 +83,11 @@ const routes = [
     path: '/DeviceGoodsSet',
     name: 'DeviceGoodsSet',
     component: DeviceGoodsSet,
-
+  },
+  {
+    path: '/Device/AdjustmentRecord',
+    name: 'AdjustmentRecord',
+    component: AdjustmentRecord,
   },
   {
     path: '/Course',
@@ -130,6 +136,11 @@ const routes = [
     path: '/Device/GoodsShelves/ChooeseGoods',
     name: 'ChooeseGoods',
     component: ChooeseGoods
+  },
+  {
+    path:'/Device/DeviceStock',
+    name:'DeviceStock',
+    component:DeviceStock
   },
   {
     path: '/Scan',

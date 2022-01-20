@@ -9,7 +9,7 @@ import store from "../store/index";
 if (process.env.NODE_ENV == "development") {
   axios.defaults.baseURL = "http://localhost:15068";
 } else if (process.env.NODE_ENV == "production") {
-  axios.defaults.baseURL = "";
+  axios.defaults.baseURL = "https://yx.gzyxtk.com:8010";
 }
 // 请求拦截器
 axios.interceptors.request.use(

@@ -46,7 +46,7 @@
         </van-grid-item>
          <van-grid-item
           icon="cart-circle"
-          text="设备库存"
+          text="商品库存"
           :to="'/Device/DeviceStock?deviceCode=' + this.$route.query.deviceCode"
         >
         </van-grid-item>

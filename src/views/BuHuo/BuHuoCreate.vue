@@ -24,7 +24,7 @@
         />
         <van-grid-item
           icon="records"
-          text="清点库存"
+          text="修改库存"
           :to="{
             path: '/DeviceGoodsSet',
             query: {

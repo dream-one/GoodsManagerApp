@@ -11,7 +11,7 @@
         :label="deviceList"
       />
     </van-cell-group>
-    <div class="logout" @click="logout">退出登录</div>
+    <div class="logout" @click="switchAccount">切换账号</div>
     <Foot />
   </div>
 </template>
@@ -26,16 +26,17 @@ export default {
     return {};
   },
   methods: {
-    logout: function () {
-      Dialog.confirm({
-        title: "提示",
-        message: "确认要退出吗？",
-      }).then(() => {
-        window.localStorage.clear();
-        this.$store.commit("clear");
-        this.$router.replace("/Login");
-        location.reload();
-      });
+    switchAccount: function () {
+      // Dialog.confirm({
+      //   title: "提示",
+      //   message: "确认要退出吗？",
+      // }).then(() => {
+      //   window.localStorage.clear();
+      //   this.$store.commit("clear");
+      //   this.$router.replace("/Login");
+      //   location.reload();
+      // });
+  this.$router.push('/My/AccountList')
     },
   },
   mounted() {
@@ -94,7 +95,7 @@ export default {
 }
 .container {
   background-color: #f4f4f4;
-  /* height: 100vh;
-  width: 100vw; */
+   height: 100vh;
+  width: 100vw; 
 }
 </style>

@@ -84,3 +84,6 @@ export const GetOrderByNo = p =>get('/api/Order/GetOrderByNo',p)
 
 //获取设备库存
 export const GetAdjustmentRecord = p =>get('/AdjustmentRecord/GetAdjustmentRecord',p)
+
+//修改商品售价
+export const EditPrice = p =>get('/api/Device/EditDeviceGoodsPrice',p)

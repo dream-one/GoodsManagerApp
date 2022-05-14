@@ -13,8 +13,9 @@
               clickable
               :title="item.Name"
               value=""
-              :label="'单价:' + item.Price + '元/' + item.Unit"
+              :label="unit(item.Price,item.Unit)"
               title-style="text-align:left"
+              @click="AddGoods(item.Id)"
             >
               <template #icon>
                 <img
@@ -31,7 +32,7 @@
                 style="height: 100%"
                 square
                 type="info"
-                text="上架"
+                text="添加至商品库"
                 @click="AddGoods(item.Id)"
               />
             </template>
@@ -79,9 +80,15 @@ export default {
       }
     },
   },
-  mounted() {
-  },
+
   methods: {
+      unit(price, unit) {
+      if(unit==null){
+        return '单价:' + price + '元'
+      }else{
+        return '单价:' + price + '元/'+unit
+      }
+    },
     onSearch:function(val) {
       this.list = [];
       this.index = 1;

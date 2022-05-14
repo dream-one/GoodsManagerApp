@@ -40,20 +40,24 @@
         ></van-grid-item>
         <van-grid-item
           icon="balance-list"
+          v-if="isAdmin"
           text="订单明细"
           :to="'/OrderList?deviceCode=' + this.$route.query.deviceCode"
         >
         </van-grid-item>
-         <van-grid-item
+        <van-grid-item
           icon="cart-circle"
           text="商品库存"
           :to="'/Device/DeviceStock?deviceCode=' + this.$route.query.deviceCode"
         >
         </van-grid-item>
-         <van-grid-item
+        <van-grid-item
           icon="underway"
           text="库存操作记录"
-          :to="'/Device/AdjustmentRecord?deviceCode=' + this.$route.query.deviceCode"
+          :to="
+            '/Device/AdjustmentRecord?deviceCode=' +
+            this.$route.query.deviceCode
+          "
         >
         </van-grid-item>
       </van-grid>
@@ -67,23 +71,30 @@ import { GetDeviceData } from "../../api/api";
 import { Toast } from "vant";
 
 export default {
-  data:function() {
+  data: function () {
     return {
       deviceData: {
-        totalIncome: 0,
-        totalOrder: 0,
+        totalIncome: "***",
+        totalOrder: "***",
       },
+        isAdmin:false
     };
   },
   mounted() {
-    GetDeviceData({ deviceCode: this.$route.query.deviceCode }).then((res) => {
-      if (res.code == 200) {
-        this.deviceData = res.data;
-      }
-    });
+    var roleId = window.localStorage.getItem("role");
+    this.isAdmin = roleId !== "3";
+    if (roleId !== "3") {
+      GetDeviceData({ deviceCode: this.$route.query.deviceCode }).then(
+        (res) => {
+          if (res.code == 200) {
+            this.deviceData = res.data;
+          }
+        }
+      );
+    }
   },
   methods: {
-    tishi:function() {
+    tishi: function () {
       Toast.fail("暂未开放");
     },
   },

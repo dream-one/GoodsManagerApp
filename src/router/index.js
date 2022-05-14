@@ -21,6 +21,7 @@ import EditGoods from '../views/MerchantGoods/EditGoods'
 import OrderDetail from '../views/Order/OrderDetail'
 import DeviceStock from '../views/Device/DeviceStock'
 import AdjustmentRecord from '../views/Device/AdjustmentRecord'
+import AccountList from '../views/My/AccountList'
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,10 +33,7 @@ const routes = [
   {
     path: '/Home',
     name: 'Home',
-    component: Home,
-    meta: {
-      alive: true//keep-alive
-    }
+    component: Home
   },
   {
     path: '/AddGoods',
@@ -60,9 +58,6 @@ const routes = [
     path: '/BuHuo',
     name: 'BuHuo',
     component: BuHuo,
-    meta: {
-      alive: true//keep-alive
-    }
   },
   {
     path: '/OrderList',
@@ -105,21 +100,22 @@ const routes = [
     component: Device,
     meta: {
       index: 0,
-      alive: true
+     
     }
   }, {
     path: '/My',
     name: 'My',
-    component: My, meta: {
-      alive: true//keep-alive
-    }
+    component: My
+  },{
+    path: '/My/AccountList',
+    name: 'AccoutList',
+    component:AccountList
   }, {
     path: '/Device/DeviceDetail',
     name: 'DeviceDetail',
     component: DeviceDetail,
     meta: {
-      index: 1,
-      alive: true//keep-alive
+      index: 1, 
     }
   },
   {

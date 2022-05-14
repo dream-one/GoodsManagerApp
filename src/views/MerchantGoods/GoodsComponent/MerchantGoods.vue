@@ -13,8 +13,9 @@
               clickable
               :title="item.Name"
               value=""
-              :label="'单价:' + item.SellPrice + '元/' + item.Unit"
+              :label="unit(item.SellPrice,item.Unit)"
               title-style="text-align:left"
+              @click="Edit(item.Goods_Id, item.Id)"
             >
               <template #icon>
                 <img
@@ -62,7 +63,7 @@ import { Dialog, Toast } from "vant";
 export default {
   props: ["searchValue"],
 
-  data:function() {
+  data: function () {
     return {
       index: 1,
       limit: 15,
@@ -95,7 +96,14 @@ export default {
   },
   mounted() {},
   methods: {
-    onSearch:function(val) {
+    unit(price, unit) {
+      if(unit==null){
+        return '单价:' + price + '元'
+      }else{
+        return '单价:' + price + '元/'+unit
+      }
+    },
+    onSearch: function (val) {
       this.list = [];
       this.index = 1;
       this.finished = false;
@@ -114,7 +122,7 @@ export default {
         }
       });
     },
-    onLoad:function() {
+    onLoad: function () {
       // 异步更新数据
       this.loading = true;
       let obj = {
@@ -140,15 +148,15 @@ export default {
       });
       this.index++;
     },
-    Edit:function(goodsId, mgId) {
+    Edit: function (goodsId, mgId) {
       this.$router.push({
         path: "EditGoods",
         query: { id: goodsId, mgId, flag: "edit" },
       });
     },
-    beforeClose:function({ name, position, instance }) {},
+    beforeClose: function ({ name, position, instance }) {},
     //
-    Del:function(id, index) {
+    Del: function (id, index) {
       Dialog.confirm({
         message: "请谨慎操作，所有设备将删除该商品",
       })

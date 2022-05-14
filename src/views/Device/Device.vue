@@ -23,22 +23,24 @@
           </van-grid-item>
         </van-grid>
       </div>
-      <div class="DeviceListContainer"  ref="rightContent">
+      <div class="DeviceListContainer" ref="rightContent">
         <div class="DeviceList">
           <van-cell-group>
             <van-cell
               title-style="text-align:left"
-              :label="item.State + ' ' + item.LastUpdateTime + ' 更新'"
+              :label="item.State"
+              :label-class="item.State == '在线' ? 'green' : 'red'"
               center
-              value=""
+              :value="item.Location"
               v-for="item in list"
               border
               :key="item.Id"
-              :title="'设备号：' + item.DeviceCode"
+              :title="item.DeviceCode"
               size="large"
               icon="bulb-o"
               is-link
               :to="'/Device/DeviceDetail?deviceCode=' + item.DeviceCode"
+              value-class="value"
             >
             </van-cell>
           </van-cell-group>
@@ -88,7 +90,7 @@ export default {
     },
     listenerFunction(e) {
       var that = this;
-       this.$refs.rightContent.addEventListener(
+      this.$refs.rightContent.addEventListener(
         "scroll",
         this.handleScroll(function () {
           let scrolled = that.$refs.rightContent.scrollTop;
@@ -119,6 +121,11 @@ export default {
 </script>
 
 <style>
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .red {
   color: rgb(199, 23, 23);
   font-size: 18px;
@@ -138,5 +145,8 @@ export default {
   overflow: scroll;
   height: 70vh;
   margin-bottom: 50px;
+}
+.green {
+  color: green !important;
 }
 </style>

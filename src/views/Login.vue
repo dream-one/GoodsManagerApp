@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+    <my-head v-if="$route.query.type">
+      <van-icon
+        @click="$router.go(-1)"
+        name="arrow-left"
+        size="25"
+        slot="left"
+        color="#fff"
+    /></my-head>
+    
     <transition>
       <van-form @submit="onSubmit">
         <van-field
@@ -28,6 +37,7 @@
 </template>
 
 <script>
+import MyHead from "../components/HeadTop";
 import { Login } from "../api/api";
 import { Toast } from "vant";
 export default {
@@ -49,28 +59,54 @@ export default {
         .then((res) => {
           if (res.code == 200) {
             //写入本地存储用户信息
-            var storage = window.localStorage;
-            storage["user_id"] = res.data.id;
-            storage["user_name"] = res.data.name;
-            storage["token"] = res.data.token;
-            storage["role"] = res.data.role;
-            storage["email"] = res.data.email;
-            storage["mchId"] = res.data.mchId;
-            storage["deviceList"] = res.data.deviceList
+            var storage = window.localStorage,
+              type = this.$route.query.type,
+              { id, name, token, role, email, mchId, deviceList } = res.data;
+            if (type && type == "addAccount") {
+              //如果是添加账号
+              var userList = JSON.parse(storage["userList"]);
+              var user = userList.find((item) => {
+                return item.user_id == id;
+              });
+              if (user) return Toast("已有此账号");
+              //设置当前登录账号
+              userList.forEach((element) => {
+                if (element.current) element.current = false;
+              });
+              userList.push({
+                user_name: name,
+                user_id: id,
+                role,
+                mchId,
+                deviceList,
+                email,
+                token,
+                current: true,
+              });
+              storage["userList"] = JSON.stringify(userList);
+            }
+            storage["user_id"] = id;
+            storage["user_name"] = name;
+            storage["token"] = token;
+            storage["role"] = role;
+            storage["email"] = email;
+            storage["mchId"] = mchId;
+            storage["deviceList"] = deviceList;
             this.$store.commit("setUserId", res.data); //设置用户Id
             Toast.success("登录成功");
-
             //跳转到主页
-            this.$router.push("/Home");
+            this.$router.replace("/Home");
           } else {
             Toast.fail(res.msg);
           }
         })
         .catch((err) => {
           Toast.fail("出现错误");
-          console.log(err);
         });
     },
+  },
+  components: {
+    MyHead,
   },
 };
 </script>
